@@ -99,17 +99,6 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1
 .img-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1rem}
 .img-row img{width:100%;height:100px;object-fit:cover;border-radius:var(--radius-sm)}
 
-.audio-wrap{background:linear-gradient(135deg,#1C1B2E 0%,#2E2B50 100%);border-radius:var(--radius);padding:1rem 1.2rem;margin:1rem 0;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
-.audio-btn{width:46px;height:46px;background:var(--coral);border:none;border-radius:50%;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
-.audio-btn:hover{background:#e05555;transform:scale(1.08)}
-.audio-info{flex:1;min-width:120px}
-.audio-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:1px}
-.audio-sub{font-size:11px;color:#aaa}
-.audio-bar{width:100%;height:3px;background:rgba(255,255,255,.2);border-radius:2px;margin-top:6px}
-.audio-bar-fill{height:100%;background:var(--coral);border-radius:2px;width:0%;transition:width .3s}
-.spd-btn{padding:4px 9px;border-radius:20px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#aaa;font-size:11px;cursor:pointer;transition:all .2s}
-.spd-btn.on{background:var(--coral);color:#fff;border-color:var(--coral)}
-
 .rtext{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);padding:1.3rem;margin-bottom:1rem;font-size:15px;line-height:1.9;box-shadow:var(--shadow)}
 .rtext p{margin-bottom:.9rem}
 .rtext p:last-child{margin-bottom:0}
@@ -162,9 +151,9 @@ body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:1
 .fill-sent{font-size:14px;line-height:2.3}
 .fill-ru{font-size:12px;color:var(--ink3);font-style:italic;margin-top:4px}
 
-/* ===== TRANSLATION REVEAL (NEW) ===== */
+/* ===== TRANSLATION REVEAL ===== */
 .trans-block{background:var(--white);border:2px solid var(--purple);border-radius:var(--radius);padding:1.2rem;margin:1rem 0}
-.trans-title{font-weight:700;color:#5b3fd4;font-size:14px;margin-bottom:.8rem;display:flex;align-items:center;gap:8px}
+.trans-title{font-weight:700;color:#5b3fd4;font-size:14px;margin-bottom:.8rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .trans-title .badge{background:var(--purple-light);color:var(--purple);padding:2px 10px;border-radius:12px;font-size:11px}
 .trans-item{background:var(--purple-light);border-radius:var(--radius-sm);padding:.7rem 1rem;margin-bottom:.5rem;cursor:pointer;transition:all .2s;border:2px solid transparent}
 .trans-item:hover{background:#ddd6ff;border-color:var(--purple)}
@@ -261,19 +250,6 @@ body.student-mode #mode-btn{color:#fff;border-color:rgba(255,255,255,.6)}
 .s-note{display:none;background:linear-gradient(135deg,#EDEAFF,#E0F7F5);border-radius:var(--radius-sm);padding:.9rem 1.1rem;margin-bottom:1rem;font-size:13px;color:var(--ink2);border-left:3px solid var(--coral)}
 .s-note-head{font-weight:700;color:var(--ink);margin-bottom:.4rem;display:flex;align-items:center;gap:6px;font-size:14px}
 
-.speak-block{display:none;background:var(--surface);border:2px dashed var(--sky);border-radius:var(--radius-sm);padding:1rem;margin-top:.8rem}
-body.student-mode .speak-block{display:block}
-.rec-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:20px;border:2px solid var(--sky);background:transparent;color:var(--sky);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
-.rec-btn:hover{background:var(--sky);color:#fff}
-.rec-btn.recording{background:var(--err);border-color:var(--err);color:#fff;animation:recPulse 1s infinite}
-@keyframes recPulse{0%,100%{opacity:1}50%{opacity:.6}}
-.rec-result{margin-top:.7rem;font-size:13px;display:none}
-.rec-result.show{display:block}
-.self-rate{display:flex;gap:.5rem;margin-top:.6rem;flex-wrap:wrap}
-.rate-btn{padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s}
-.rate-btn:hover{border-color:var(--sky)}
-.rate-btn.rated{border-color:var(--mint);background:var(--mint-light);color:#2a7a26}
-
 @media(max-width:480px){
   .hero{padding:1.5rem 1.2rem 1.4rem}
   .hero-title{font-size:1.6rem}
@@ -330,13 +306,18 @@ body.student-mode .speak-block{display:block}
     <div class="say">"Tell me about your family! Who lives with you? Would you say you have a close-knit family?"</div>
   </div>
 
+  <!-- Full textbook text for Lesson 1 -->
   <div class="rtext">
-    <p><strong>Reading: Anna's Story</strong></p>
-    <p>Anna grew up in what most people would call a <span class="hi" onclick="addW(this)" data-w="dysfunctional family" data-ru="неблагополучная семья" data-m="Unhealthy relationships with serious problems">dysfunctional family</span>. Her parents had a <span class="hi" onclick="addW(this)" data-w="messy divorce" data-ru="запутанный развод" data-m="A divorce with many conflicts and legal complications">messy divorce</span> when she was five — arguments, lawyers, a long and painful <span class="hi" onclick="addW(this)" data-w="divorce settlement" data-ru="соглашение о разделе имущества" data-m="Legal decisions about dividing money and possessions">divorce settlement</span>.</p>
-    <p>Unlike children with a happy <span class="hi" onclick="addW(this)" data-w="carefree childhood" data-ru="беззаботное детство" data-m="A childhood with no worries, full of fun">carefree childhood</span>, Anna had a genuinely <span class="hi" onclick="addW(this)" data-w="troubled childhood" data-ru="трудное детство" data-m="A childhood marked by hardship, poverty or emotional problems">troubled childhood</span>. She grew up in what felt like a <span class="hi" onclick="addW(this)" data-w="broken home" data-ru="неполная семья" data-m="A family where parents have separated or divorced">broken home</span>.</p>
-    <p>Her father was first awarded <span class="hi" onclick="addW(this)" data-w="sole custody" data-ru="единоличная опека" data-m="Only one parent has full legal responsibility">sole custody</span>, but later they agreed on <span class="hi" onclick="addW(this)" data-w="joint custody" data-ru="совместная опека" data-m="Both parents share equal legal responsibility">joint custody</span>. Her mother paid <span class="hi" onclick="addW(this)" data-w="child support" data-ru="алименты" data-m="Regular money payments to help with the expenses of raising a child">child support</span> each month.</p>
-    <p>Her <span class="hi" onclick="addW(this)" data-w="extended family" data-ru="расширенная семья" data-m="All relatives including grandparents, aunts, cousins">extended family</span> became her safe space. Together they formed a surprisingly <span class="hi" onclick="addW(this)" data-w="close-knit family" data-ru="дружная семья" data-m="A family with very strong emotional bonds">close-knit family</span> unit.</p>
-    <p>Today Anna is a proud <span class="hi" onclick="addW(this)" data-w="single mother" data-ru="мать-одиночка" data-m="A woman raising a child without a partner">single mother</span> of a seven-year-old boy, and her parents have finally learned to <span class="hi" onclick="addW(this)" data-w="stay on good terms" data-ru="оставаться в хороших отношениях" data-m="To maintain a polite, friendly relationship">stay on good terms</span> for his sake.</p>
+    <p><strong>From the textbook:</strong></p>
+    <p>Your parents and siblings (brothers and sisters) are your <span class="hi" onclick="addW(this)" data-w="immediate family" data-ru="ближайшие родственники" data-m="Your closest relatives: parents and siblings">immediate family</span> — and your <span class="hi" onclick="addW(this)" data-w="extended family" data-ru="расширенная семья" data-m="All relatives including grandparents, aunts, cousins">extended family</span> includes all your relatives — uncles, cousins, great-aunts, etc.</p>
+    <p>You can use a <span class="hi" onclick="addW(this)" data-w="family tree" data-ru="семейное древо" data-m="A diagram showing relationships among family members">family tree</span> to diagram the relationships among your family members. A person who is related to you by a long series of connections can be called a <span class="hi" onclick="addW(this)" data-w="distant relative" data-ru="дальний родственник" data-m="A relative connected by a long chain of relationships">distant relative</span>.</p>
+    <p>If you're lucky, you have a <span class="hi" onclick="addW(this)" data-w="loving family" data-ru="любящая семья" data-m="A family that shows love and care">loving family</span> or a <span class="hi" onclick="addW(this)" data-w="close-knit family" data-ru="дружная семья" data-m="A family with very strong bonds">close-knit family</span> — these expressions refer to a family that has good relationships, where everyone loves each other and helps each other. If you were raised in a loving family, then you probably had a <span class="hi" onclick="addW(this)" data-w="carefree childhood" data-ru="беззаботное детство" data-m="A childhood with nothing to worry about">carefree childhood</span> — that means you had nothing to worry about when you were young.</p>
+    <p>On the other hand, a family in which the relationships are bad or unhealthy can be called a <span class="hi" onclick="addW(this)" data-w="dysfunctional family" data-ru="неблагополучная семья" data-m="A family with unhealthy relationships">dysfunctional family</span>. If the children experience abuse, poverty, or problems with the law, we can say they had a <span class="hi" onclick="addW(this)" data-w="troubled childhood" data-ru="трудное детство" data-m="A childhood marked by hardship">troubled childhood</span>.</p>
+    <p>Perhaps the parents went through a <span class="hi" onclick="addW(this)" data-w="bitter divorce" data-ru="горький развод" data-m="A painful divorce with bad feelings">bitter divorce</span> — that means a separation in which there were bad/angry feelings between the husband and wife. It's also possible to have a <span class="hi" onclick="addW(this)" data-w="messy divorce" data-ru="запутанный развод" data-m="A divorce with many complications">messy divorce</span>, with a prolonged legal battle involving lots of conflicts about the separation of the former couple's assets. The decisions about the separation of assets are made in the <span class="hi" onclick="addW(this)" data-w="divorce settlement" data-ru="соглашение о разделе имущества" data-m="Legal decision about dividing money and possessions">divorce settlement</span>. A family in which there are divorces or separations is sometimes called a <span class="hi" onclick="addW(this)" data-w="broken home" data-ru="неполная семья" data-m="A family where parents have separated">broken home</span>.</p>
+    <p>Sometimes the mother and father <span class="hi" onclick="addW(this)" data-w="fight over custody" data-ru="бороться за опеку" data-m="To argue in court about who has the right to care for children">fight over custody</span> of the children — that refers to who has the primary responsibility of caring for the kids. A judge can grant <span class="hi" onclick="addW(this)" data-w="joint custody" data-ru="совместная опека" data-m="Both parents share responsibility">joint custody</span> — that means the ex-husband and ex-wife share the responsibility — or <span class="hi" onclick="addW(this)" data-w="sole custody" data-ru="единоличная опека" data-m="Only one parent has legal responsibility">sole custody</span> to only one parent. For example, a judge might award sole custody to the mother, and the father has to pay <span class="hi" onclick="addW(this)" data-w="child support" data-ru="алименты" data-m="Regular money payments for the child's expenses">child support</span> — regular payments to help with expenses for the kids.</p>
+    <p>If it was a <span class="hi" onclick="addW(this)" data-w="mutual divorce" data-ru="развод по взаимному согласию" data-m="A divorce both partners agreed to peacefully">mutual divorce</span> — that means the ex-husband and ex-wife agreed to separate without fighting — then they will probably <span class="hi" onclick="addW(this)" data-w="stay on good terms" data-ru="оставаться в хороших отношениях" data-m="To maintain a polite relationship">stay on good terms</span> with each other.</p>
+    <p>If a woman gets pregnant without being married or in a relationship, then she will become a <span class="hi" onclick="addW(this)" data-w="single mother" data-ru="мать-одиночка" data-m="A woman raising a child without a partner">single mother</span>. Some women in this situation choose to have an abortion, and others prefer to <span class="hi" onclick="addW(this)" data-w="give up for adoption" data-ru="отдать на усыновление" data-m="To legally transfer a child to other parents">give the baby up for adoption</span>. The time when the baby is planned to arrive is called the due date — you can also say the baby is due in mid-October, for example.</p>
+    <p>After the woman <span class="hi" onclick="addW(this)" data-w="gives birth to" data-ru="рожает" data-m="To have a baby; to deliver a child">gives birth to</span> the baby, the baby is given to the adoptive parents, who will <span class="hi" onclick="addW(this)" data-w="bring up a child" data-ru="воспитывать ребёнка" data-m="To raise and nurture a child">bring up the child</span> as if it was their own. Sometimes, when the adopted child is older, he or she tries to find their <span class="hi" onclick="addW(this)" data-w="birth mother" data-ru="биологическая мать" data-m="The biological mother who gave birth to the child">birth mother</span>.</p>
   </div>
   <p style="font-size:12px;color:var(--ink3);margin-bottom:1rem">💡 <em>Tap orange phrases to add them to your vocabulary list</em></p>
 
@@ -368,18 +349,18 @@ body.student-mode .speak-block{display:block}
   <div class="fb" id="ffb1"></div>
   <div class="banner" id="bn1f">🎉 All correct! +18 points</div>
 
-  <!-- ===== TRANSLATION REVEAL (NEW) ===== -->
+  <!-- TRANSLATION REVEAL -->
   <h3 style="font-size:14px;font-weight:700;margin:1.5rem 0 .5rem">🌐 Translate from Russian → English</h3>
   <div class="trans-block" id="trans1">
     <div class="trans-title">
       <span>🧠 Think of the English translation in your mind</span>
-      <span class="badge">then tap to check</span>
+      <span class="badge">tap to check</span>
     </div>
     <div class="instr">👆 <strong>Look at the Russian sentence. Think of the English translation in your head.</strong> Tap the sentence to reveal the correct English translation. Practice as many times as you want!</div>
     <div id="trans-list1"></div>
     <div class="trans-reset">
       <button class="btn btn-orange" onclick="resetTrans(1)">🔄 Reset all</button>
-      <span class="trans-progress" id="trans-progress1">Revealed: 0 / 6</span>
+      <span class="trans-progress" id="trans-progress1">Revealed: 0 / 8</span>
     </div>
   </div>
 
@@ -401,12 +382,14 @@ body.student-mode .speak-block{display:block}
     <div class="say">"Do you believe in love at first sight? Tell me about your closest friends!"</div>
   </div>
 
+  <!-- Full textbook text for Lesson 2 -->
   <div class="rtext">
-    <p>When you move to a new city, it can be hard to <span class="hi" onclick="addW(this)" data-w="make friends" data-ru="заводить друзей" data-m="To form friendships with new people">make friends</span>. You'll probably have a number of casual acquaintances — people who you know on a basic level, but with whom you don't have a significant relationship.</p>
-    <p>Over time, some of these may become <span class="hi" onclick="addW(this)" data-w="close friends" data-ru="близкие друзья" data-m="Friends with whom you have a very strong relationship">close friends</span>. Do you believe in <span class="hi" onclick="addW(this)" data-w="love at first sight" data-ru="любовь с первого взгляда" data-m="Falling in love immediately upon meeting someone">love at first sight</span>? That's when two people meet and immediately <span class="hi" onclick="addW(this)" data-w="fall in love" data-ru="влюбляться" data-m="To develop romantic feelings for someone">fall in love</span>.</p>
-    <p>Some people believe that their <span class="hi" onclick="addW(this)" data-w="significant other" data-ru="вторая половинка" data-m="Your boyfriend, girlfriend, husband, or wife">significant other</span> is their <span class="hi" onclick="addW(this)" data-w="soul mate" data-ru="родственная душа" data-m="Someone you are destined to be with">soul mate</span>. It's possible for one person to <span class="hi" onclick="addW(this)" data-w="have feelings for" data-ru="испытывать чувства к" data-m="To have romantic feelings for someone">have feelings for</span> another person, but if the other person doesn't feel the same way, then the feeling is not mutual.</p>
-    <p>Some people marry their <span class="hi" onclick="addW(this)" data-w="childhood sweetheart" data-ru="первая любовь / друг детства" data-m="A boyfriend or girlfriend from childhood">childhood sweetheart</span>. When the couple is ready to <span class="hi" onclick="addW(this)" data-w="make a commitment" data-ru="взять на себя обязательства" data-m="To promise to be together in a serious relationship">make a commitment</span>, the man <span class="hi" onclick="addW(this)" data-w="propose" data-ru="делать предложение" data-m="To ask someone to marry you">proposes</span> to the woman.</p>
-    <p>Unfortunately, not all love stories have a happy ending. Sometimes a husband or wife <span class="hi" onclick="addW(this)" data-w="has an affair" data-ru="иметь роман на стороне" data-m="To have a sexual relationship with someone other than your spouse">has an affair</span>. We can also say that they are <span class="hi" onclick="addW(this)" data-w="cheating on" data-ru="изменять" data-m="To be unfaithful to your partner">cheating on</span> their husband/wife.</p>
+    <p><strong>From the textbook:</strong></p>
+    <p>When you move to a new city, it can be hard to <span class="hi" onclick="addW(this)" data-w="make friends" data-ru="заводить друзей" data-m="To form friendships with new people">make friends</span>. You'll probably have a number of casual acquaintances — people who you know on a basic level, but with whom you don't have a significant relationship. Over time, some of these may become <span class="hi" onclick="addW(this)" data-w="good friends" data-ru="хорошие друзья" data-m="Friends with a strong relationship">good friends</span> or <span class="hi" onclick="addW(this)" data-w="close friends" data-ru="близкие друзья" data-m="Friends with an especially strong bond">close friends</span> — these collocations refer to friends with whom you have an especially strong relationship.</p>
+    <p>Do you believe in <span class="hi" onclick="addW(this)" data-w="love at first sight" data-ru="любовь с первого взгляда" data-m="Falling in love immediately upon meeting">love at first sight</span>? That's when two people meet each other and immediately <span class="hi" onclick="addW(this)" data-w="fall in love" data-ru="влюбляться" data-m="To develop romantic feelings for someone">fall in love</span> — perhaps because they have strong chemistry — this expression describes strong compatibility or connection between two possible romantic partners. Some people believe that their <span class="hi" onclick="addW(this)" data-w="significant other" data-ru="вторая половинка" data-m="Your boyfriend, girlfriend, husband, or wife">significant other</span> (their boyfriend, girlfriend, husband, or wife) is their <span class="hi" onclick="addW(this)" data-w="soul mate" data-ru="родственная душа" data-m="Someone you are destined to be with">soul mate</span> — this is a poetic expression that means that two people are destined to be together.</p>
+    <p>It's possible for one person to <span class="hi" onclick="addW(this)" data-w="have feelings for" data-ru="испытывать чувства к" data-m="To have romantic feelings for someone">have feelings for</span> another person — this expression is an indirect way to describe romantic feelings — but if the other person doesn't feel the same way, then the feeling is not mutual. The other person might say "he's/she's just not my type" — meaning that they are interested in people of a different type of personality/appearance. Ah, there's nothing sadder than <span class="hi" onclick="addW(this)" data-w="unrequited love" data-ru="безответная любовь" data-m="Love that is not returned">unrequited love</span>!</p>
+    <p>Some people marry their <span class="hi" onclick="addW(this)" data-w="childhood sweetheart" data-ru="первая любовь" data-m="A boyfriend or girlfriend from childhood">childhood sweetheart</span> or <span class="hi" onclick="addW(this)" data-w="high school sweetheart" data-ru="школьная любовь" data-m="A boyfriend or girlfriend from high school">high school sweetheart</span> — this expression refers to a boyfriend or girlfriend from your childhood, teenage, or college years. Other couples are introduced by a <span class="hi" onclick="addW(this)" data-w="mutual friend" data-ru="общий друг" data-m="A friend that two people have in common">mutual friend</span> — one friend that the two people have in common. When the couple is ready to <span class="hi" onclick="addW(this)" data-w="make a commitment" data-ru="взять на себя обязательства" data-m="To promise to be together in a serious relationship">make a commitment</span>, the man <span class="hi" onclick="addW(this)" data-w="proposes" data-ru="делает предложение" data-m="To ask someone to marry you">proposes</span> to the woman — he asks her to marry him. If the marriage is good, then we say the couple is <span class="hi" onclick="addW(this)" data-w="happily married" data-ru="счастливы в браке" data-m="Having a good, happy marriage">happily married</span>.</p>
+    <p>Unfortunately, not all love stories have a happy ending. Sometimes a husband or wife <span class="hi" onclick="addW(this)" data-w="has an affair" data-ru="имеет роман на стороне" data-m="To have a sexual relationship with someone else">has an affair</span> — they have sex with a different person. We can also say that they are <span class="hi" onclick="addW(this)" data-w="cheating on" data-ru="изменять" data-m="To be unfaithful to your partner">cheating on</span> their husband/wife. The expression "have an affair" is typically used only for married couples, and the expression "cheating on" can be used for married couples or for boyfriends/girlfriends.</p>
   </div>
   <p style="font-size:12px;color:var(--ink3);margin-bottom:1rem">💡 <em>Tap orange phrases to add them to your vocabulary list</em></p>
 
@@ -437,7 +420,7 @@ body.student-mode .speak-block{display:block}
   <div class="fb" id="ffb2"></div>
   <div class="banner" id="bn2f">🎉 All correct! +18 points</div>
 
-  <!-- ===== TRANSLATION REVEAL L2 ===== -->
+  <!-- TRANSLATION REVEAL L2 -->
   <h3 style="font-size:14px;font-weight:700;margin:1.5rem 0 .5rem">🌐 Translate from Russian → English</h3>
   <div class="trans-block" id="trans2">
     <div class="trans-title"><span>🧠 Think of the English translation in your mind</span><span class="badge">tap to check</span></div>
@@ -445,7 +428,7 @@ body.student-mode .speak-block{display:block}
     <div id="trans-list2"></div>
     <div class="trans-reset">
       <button class="btn btn-orange" onclick="resetTrans(2)">🔄 Reset all</button>
-      <span class="trans-progress" id="trans-progress2">Revealed: 0 / 6</span>
+      <span class="trans-progress" id="trans-progress2">Revealed: 0 / 8</span>
     </div>
   </div>
 
@@ -468,11 +451,15 @@ body.student-mode .speak-block{display:block}
     <div class="say">"Describe a friend or celebrity! What do they look like?"</div>
   </div>
 
+  <!-- Full textbook text for Lesson 3 -->
   <div class="rtext">
+    <p><strong>From the textbook:</strong></p>
     <p>My best friend Joanna is absolutely <span class="hi" onclick="addW(this)" data-w="gorgeous" data-ru="потрясающе красивая" data-m="Extremely beautiful">gorgeous</span>. She has long, sleek, <span class="hi" onclick="addW(this)" data-w="jet-black hair" data-ru="черные как смоль волосы" data-m="Perfectly black hair">jet-black hair</span>, <span class="hi" onclick="addW(this)" data-w="pale blue eyes" data-ru="светло-голубые глаза" data-m="Light blue eyes">pale blue eyes</span>, and a <span class="hi" onclick="addW(this)" data-w="radiant complexion" data-ru="сияющий цвет лица" data-m="Skin that appears healthy and full of energy">radiant complexion</span>.</p>
-    <p>People always compliment her on her <span class="hi" onclick="addW(this)" data-w="hourglass figure" data-ru="фигура песочные часы" data-m="Large breasts and hips with a small waist">hourglass figure</span> and ask her what the secret is to maintaining such <span class="hi" onclick="addW(this)" data-w="slender waist" data-ru="тонкая талия" data-m="A thin waist">slender waist</span>. She has a round face with an upturned nose, and she actually <span class="hi" onclick="addW(this)" data-w="bears a striking resemblance" data-ru="иметь поразительное сходство" data-m="To look extremely similar to someone">bears a striking resemblance</span> to a famous singer.</p>
-    <p>Her boyfriend has <span class="hi" onclick="addW(this)" data-w="unkempt hair" data-ru="неухоженные волосы" data-m="Messy hair that looks like the person doesn't take care of it">unkempt hair</span>, a square face and a <span class="hi" onclick="addW(this)" data-w="ruddy complexion" data-ru="красноватый цвет лица" data-m="Reddish skin">ruddy complexion</span>. His <span class="hi" onclick="addW(this)" data-w="deep-set eyes" data-ru="глубоко посаженные глаза" data-m="Eyes that are far back in the person's face">deep-set eyes</span> are almost hidden under his <span class="hi" onclick="addW(this)" data-w="bushy eyebrows" data-ru="густые брови" data-m="Big eyebrows with lots of hair">bushy eyebrows</span>. He has an <span class="hi" onclick="addW(this)" data-w="athletic build" data-ru="спортивное телосложение" data-m="A body with a lot of muscles">athletic build</span>, with <span class="hi" onclick="addW(this)" data-w="broad shoulders" data-ru="широкие плечи" data-m="Wide shoulders">broad shoulders</span>. If he would only <span class="hi" onclick="addW(this)" data-w="trim his beard" data-ru="подстричь бороду" data-m="To cut a beard a little shorter">trim his beard</span>, he could be considered attractive.</p>
+    <p>People always compliment her on her <span class="hi" onclick="addW(this)" data-w="hourglass figure" data-ru="фигура песочные часы" data-m="Large breasts and hips with a small waist">hourglass figure</span> and ask her what the secret is to maintaining such a <span class="hi" onclick="addW(this)" data-w="slender waist" data-ru="тонкая талия" data-m="A thin waist">slender waist</span>. She has a round face with an upturned nose, and she actually <span class="hi" onclick="addW(this)" data-w="bears a striking resemblance" data-ru="иметь поразительное сходство" data-m="To look extremely similar to someone">bears a striking resemblance</span> to a famous singer.</p>
+    <p>Joanna could get any guy she wanted — so I was really surprised when she introduced me to her latest boyfriend, who I think is hideously ugly. He has curly, shoulder-length hair that looks rather <span class="hi" onclick="addW(this)" data-w="unkempt" data-ru="неухоженный" data-m="Messy, not taken care of">unkempt</span>. He has a square face and a <span class="hi" onclick="addW(this)" data-w="ruddy complexion" data-ru="красноватый цвет лица" data-m="Reddish skin">ruddy complexion</span>. His <span class="hi" onclick="addW(this)" data-w="deep-set eyes" data-ru="глубоко посаженные глаза" data-m="Eyes that are far back in the face">deep-set eyes</span> are almost hidden under his <span class="hi" onclick="addW(this)" data-w="bushy eyebrows" data-ru="густые брови" data-m="Big eyebrows with lots of hair">bushy eyebrows</span>, and he sports a thick mustache and a huge, shaggy beard. I guess Joanna doesn't mind his <span class="hi" onclick="addW(this)" data-w="facial hair" data-ru="волосы на лице" data-m="Beard and/or mustache">facial hair</span>.</p>
+    <p>His body isn't bad — he has an <span class="hi" onclick="addW(this)" data-w="athletic build" data-ru="спортивное телосложение" data-m="A body with a lot of muscles">athletic build</span>, with <span class="hi" onclick="addW(this)" data-w="broad shoulders" data-ru="широкие плечи" data-m="Wide shoulders">broad shoulders</span> and muscular arms. If he would only <span class="hi" onclick="addW(this)" data-w="trim his beard" data-ru="подстричь бороду" data-m="To cut a beard a little shorter">trim his beard</span> and comb his hair, I suppose he could be considered <span class="hi" onclick="addW(this)" data-w="somewhat attractive" data-ru="довольно привлекательный" data-m="More or less handsome">somewhat attractive</span>.</p>
   </div>
+  <p style="font-size:12px;color:var(--ink3);margin-bottom:1rem">💡 <em>Tap orange phrases to add them to your vocabulary list</em></p>
 
   <h3 style="font-size:14px;font-weight:700;margin-bottom:.7rem">✅ Quick Quiz</h3>
   <div id="cq3"></div>
@@ -493,7 +480,7 @@ body.student-mode .speak-block{display:block}
   <div class="fb" id="ffb3"></div>
   <div class="banner" id="bn3f">🎉 All correct! +18 points</div>
 
-  <!-- ===== TRANSLATION REVEAL L3 ===== -->
+  <!-- TRANSLATION REVEAL L3 -->
   <h3 style="font-size:14px;font-weight:700;margin:1.5rem 0 .5rem">🌐 Translate from Russian → English</h3>
   <div class="trans-block" id="trans3">
     <div class="trans-title"><span>🧠 Think of the English translation in your mind</span><span class="badge">tap to check</span></div>
@@ -501,7 +488,7 @@ body.student-mode .speak-block{display:block}
     <div id="trans-list3"></div>
     <div class="trans-reset">
       <button class="btn btn-orange" onclick="resetTrans(3)">🔄 Reset all</button>
-      <span class="trans-progress" id="trans-progress3">Revealed: 0 / 6</span>
+      <span class="trans-progress" id="trans-progress3">Revealed: 0 / 8</span>
     </div>
   </div>
 
@@ -524,12 +511,15 @@ body.student-mode .speak-block{display:block}
     <div class="say">"Are you an outgoing person? Tell me about your personality!"</div>
   </div>
 
+  <!-- Full textbook text for Lesson 4 -->
   <div class="rtext">
+    <p><strong>From the textbook:</strong></p>
     <p>When I was a teenager, I was <span class="hi" onclick="addW(this)" data-w="painfully shy" data-ru="очень застенчивый" data-m="Extremely shy">painfully shy</span>. I loved reading books, and I had a <span class="hi" onclick="addW(this)" data-w="vivid imagination" data-ru="яркое воображение" data-m="A creative and colorful imagination">vivid imagination</span>. My best friend had a more <span class="hi" onclick="addW(this)" data-w="outgoing personality" data-ru="общительная личность" data-m="Liking to be friendly and sociable">outgoing personality</span> and a good <span class="hi" onclick="addW(this)" data-w="sense of humor" data-ru="чувство юмора" data-m="Ability to make other people laugh">sense of humor</span>. Unfortunately she was also <span class="hi" onclick="addW(this)" data-w="brutally honest" data-ru="крайне честный" data-m="Extremely honest, sometimes to the point of hurting feelings">brutally honest</span>, and sometimes her comments <span class="hi" onclick="addW(this)" data-w="hurt my feelings" data-ru="ранить чувства" data-m="Made me sad, upset, or angry">hurt my feelings</span>.</p>
-    <p>Although I was <span class="hi" onclick="addW(this)" data-w="fiercely loyal" data-ru="безгранично преданный" data-m="Extremely loyal and devoted">fiercely loyal</span> to her, she <span class="hi" onclick="addW(this)" data-w="showed her true colors" data-ru="показала свое истинное лицо" data-m="Revealed her true personality">showed her true colors</span> when she <span class="hi" onclick="addW(this)" data-w="played a prank" data-ru="сыграла шутку" data-m="Did a trick on someone">played a prank</span> that humiliated me. I <span class="hi" onclick="addW(this)" data-w="bore a grudge" data-ru="затаила обиду" data-m="Continued feeling angry about something">bore a grudge</span> against her for years afterwards. Now that I look back on it, I can see that she had <span class="hi" onclick="addW(this)" data-w="low self-esteem" data-ru="низкая самооценка" data-m="Considering yourself inferior">low self-esteem</span> and a bit of a <span class="hi" onclick="addW(this)" data-w="mean streak" data-ru="злая жилка" data-m="A tendency to be mean or nasty">mean streak</span>.</p>
+    <p>Although I was <span class="hi" onclick="addW(this)" data-w="fiercely loyal" data-ru="безгранично преданный" data-m="Extremely loyal and devoted">fiercely loyal</span> to her, she <span class="hi" onclick="addW(this)" data-w="showed her true colors" data-ru="показала свое истинное лицо" data-m="Revealed her true personality">showed her true colors</span> when she <span class="hi" onclick="addW(this)" data-w="played a prank" data-ru="сыграла шутку" data-m="Did a trick on someone">played a prank</span> that humiliated me in front of the class. I <span class="hi" onclick="addW(this)" data-w="bore a grudge" data-ru="затаила обиду" data-m="Continued feeling angry about something">bore a grudge</span> against her for years afterwards. Now that I look back on it, I can see that she had <span class="hi" onclick="addW(this)" data-w="low self-esteem" data-ru="низкая самооценка" data-m="Considering yourself inferior">low self-esteem</span> and a bit of a <span class="hi" onclick="addW(this)" data-w="mean streak" data-ru="злая жилка" data-m="A tendency to be mean or nasty">mean streak</span>.</p>
     <p>I've <span class="hi" onclick="addW(this)" data-w="come out of my shell" data-ru="вышла из своей скорлупы" data-m="Become less shy and more confident">come out of my shell</span> since those days; I have <span class="hi" onclick="addW(this)" data-w="a thicker skin" data-ru="толстая кожа" data-m="Less sensitive to criticism">a thicker skin</span> and it doesn't bother me when people <span class="hi" onclick="addW(this)" data-w="speak their minds" data-ru="говорят, что думают" data-m="Say exactly what they think, without considering the effects on others">speak their minds</span>.</p>
-    <p>My biggest flaw is that I have a tendency to be arrogant — some say I have a <span class="hi" onclick="addW(this)" data-w="superiority complex" data-ru="комплекс превосходства" data-m="Considering yourself superior to others">superiority complex</span>. I'll admit that it is hard for me to <span class="hi" onclick="addW(this)" data-w="swallow my pride" data-ru="проглотить гордость" data-m="Stop being arrogant and admit you're wrong">swallow my pride</span> and recognize when I've been mistaken. My resolution for the New Year is to <span class="hi" onclick="addW(this)" data-w="put others first" data-ru="ставить других на первое место" data-m="Consider the needs of other people more important than your own">put others first</span>.</p>
+    <p>My biggest flaw is that I have a tendency to be arrogant — some say I have a <span class="hi" onclick="addW(this)" data-w="superiority complex" data-ru="комплекс превосходства" data-m="Considering yourself superior to others">superiority complex</span>. I'll admit that it is hard for me to <span class="hi" onclick="addW(this)" data-w="swallow my pride" data-ru="проглотить гордость" data-m="Stop being arrogant and admit you're wrong">swallow my pride</span> and recognize when I've been mistaken about something. My resolution for the New Year is to <span class="hi" onclick="addW(this)" data-w="put others first" data-ru="ставить других на первое место" data-m="Consider the needs of other people more important than your own">put others first</span>.</p>
   </div>
+  <p style="font-size:12px;color:var(--ink3);margin-bottom:1rem">💡 <em>Tap orange phrases to add them to your vocabulary list</em></p>
 
   <h3 style="font-size:14px;font-weight:700;margin-bottom:.7rem">✅ Quick Quiz</h3>
   <div id="cq4"></div>
@@ -550,7 +540,7 @@ body.student-mode .speak-block{display:block}
   <div class="fb" id="mfb4"></div>
   <div class="banner" id="bn4m">🎉 All pairs matched! +16 points</div>
 
-  <!-- ===== TRANSLATION REVEAL L4 ===== -->
+  <!-- TRANSLATION REVEAL L4 -->
   <h3 style="font-size:14px;font-weight:700;margin:1.5rem 0 .5rem">🌐 Translate from Russian → English</h3>
   <div class="trans-block" id="trans4">
     <div class="trans-title"><span>🧠 Think of the English translation in your mind</span><span class="badge">tap to check</span></div>
@@ -558,7 +548,7 @@ body.student-mode .speak-block{display:block}
     <div id="trans-list4"></div>
     <div class="trans-reset">
       <button class="btn btn-orange" onclick="resetTrans(4)">🔄 Reset all</button>
-      <span class="trans-progress" id="trans-progress4">Revealed: 0 / 6</span>
+      <span class="trans-progress" id="trans-progress4">Revealed: 0 / 8</span>
     </div>
   </div>
 
@@ -581,14 +571,17 @@ body.student-mode .speak-block{display:block}
     <div class="say">"Tell me about a time you felt very emotional. What happened?"</div>
   </div>
 
+  <!-- Full textbook text for Lesson 5 -->
   <div class="rtext">
+    <p><strong>From the textbook:</strong></p>
     <p>I experienced a <span class="hi" onclick="addW(this)" data-w="roller coaster of emotions" data-ru="американские горки эмоций" data-m="Many different emotions one after another">roller coaster of emotions</span> when my son was born. During my wife's pregnancy, I was <span class="hi" onclick="addW(this)" data-w="ridiculously excited" data-ru="невероятно взволнован" data-m="Extremely excited">ridiculously excited</span> about the prospect of becoming a dad.</p>
-    <p>On the big day, I'd imagined that everything would go smoothly — but there were complications during the delivery and my wife had to have emergency surgery while I waited, <span class="hi" onclick="addW(this)" data-w="worried sick" data-ru="очень переживал" data-m="Very worried">worried sick</span>.</p>
-    <p>As time went by, I got increasingly anxious because the doctors weren't telling me anything. After two hours I was <span class="hi" onclick="addW(this)" data-w="seething with anger" data-ru="кипеть от гнева" data-m="Ready to explode with anger">seething with anger</span>, and I shouted at one of the nurses.</p>
-    <p>My wife was <span class="hi" onclick="addW(this)" data-w="visibly disappointed" data-ru="явно разочарована" data-m="It was obvious that she was disappointed">visibly disappointed</span> that I wasn't by her side when she woke up from surgery. She prefers to <span class="hi" onclick="addW(this)" data-w="bottle up her emotions" data-ru="подавлять эмоции" data-m="Keep emotions hidden inside">bottle up her emotions</span> — but I knew I had let her down and I was terribly sorry that I had <span class="hi" onclick="addW(this)" data-w="lost my temper" data-ru="вышел из себя" data-m="Lost control and shown anger">lost my temper</span>.</p>
+    <p>On the big day, I'd imagined that everything would go smoothly and we'd be blissfully happy — but there were complications during the delivery and my wife had to have emergency surgery while I waited in the reception area, <span class="hi" onclick="addW(this)" data-w="worried sick" data-ru="очень переживал" data-m="Very worried">worried sick</span>.</p>
+    <p>As time went by, I got increasingly anxious because the doctors weren't telling me anything. After two hours I was <span class="hi" onclick="addW(this)" data-w="seething with anger" data-ru="кипеть от гнева" data-m="Ready to explode with anger">seething with anger</span>, and I shouted at one of the nurses. Then the security guards came and escorted me out of the hospital.</p>
+    <p>My wife was <span class="hi" onclick="addW(this)" data-w="visibly disappointed" data-ru="явно разочарована" data-m="It was obvious that she was disappointed">visibly disappointed</span> that I wasn't by her side when she woke up from surgery. She didn't say anything — she's not really one to show her feelings; she prefers to <span class="hi" onclick="addW(this)" data-w="bottle up her emotions" data-ru="подавлять эмоции" data-m="Keep emotions hidden inside">bottle up her emotions</span> — but I knew I had let her down and I was terribly sorry that I had <span class="hi" onclick="addW(this)" data-w="lost my temper" data-ru="вышел из себя" data-m="Lost control and shown anger">lost my temper</span>.</p>
     <p>The months that followed were tough. My wife became <span class="hi" onclick="addW(this)" data-w="deeply depressed" data-ru="глубоко подавлена" data-m="Very depressed">deeply depressed</span>, and I too was an <span class="hi" onclick="addW(this)" data-w="emotional wreck" data-ru="эмоциональный развалина" data-m="A person who is very sad, confused, and upset">emotional wreck</span> as I tried to juggle the demands of work and family life.</p>
     <p>But now things are starting to turn around — I've been <span class="hi" onclick="addW(this)" data-w="pleasantly surprised" data-ru="приятно удивлен" data-m="Surprised in a good way">pleasantly surprised</span> at all the help we've gotten from our friends and neighbors. I'm just <span class="hi" onclick="addW(this)" data-w="immensely grateful" data-ru="чрезвычайно благодарен" data-m="Extremely grateful">immensely grateful</span> that my wife and son are healthy, and sometimes I'm <span class="hi" onclick="addW(this)" data-w="overwhelmed with emotion" data-ru="переполнен эмоциями" data-m="When emotion is so strong it's difficult to think or speak">overwhelmed with emotion</span> as I reflect on how lucky we are.</p>
   </div>
+  <p style="font-size:12px;color:var(--ink3);margin-bottom:1rem">💡 <em>Tap orange phrases to add them to your vocabulary list</em></p>
 
   <h3 style="font-size:14px;font-weight:700;margin-bottom:.7rem">✅ Quick Quiz</h3>
   <div id="cq5"></div>
@@ -609,7 +602,7 @@ body.student-mode .speak-block{display:block}
   <div class="fb" id="ffb5"></div>
   <div class="banner" id="bn5f">🎉 All correct! +18 points</div>
 
-  <!-- ===== TRANSLATION REVEAL L5 ===== -->
+  <!-- TRANSLATION REVEAL L5 -->
   <h3 style="font-size:14px;font-weight:700;margin:1.5rem 0 .5rem">🌐 Translate from Russian → English</h3>
   <div class="trans-block" id="trans5">
     <div class="trans-title"><span>🧠 Think of the English translation in your mind</span><span class="badge">tap to check</span></div>
@@ -617,7 +610,7 @@ body.student-mode .speak-block{display:block}
     <div id="trans-list5"></div>
     <div class="trans-reset">
       <button class="btn btn-orange" onclick="resetTrans(5)">🔄 Reset all</button>
-      <span class="trans-progress" id="trans-progress5">Revealed: 0 / 6</span>
+      <span class="trans-progress" id="trans-progress5">Revealed: 0 / 8</span>
     </div>
   </div>
 
@@ -651,7 +644,7 @@ body.student-mode .speak-block{display:block}
   <h2 class="sec-title">Eating 🍽️</h2>
   <div class="sec-meta">15 collocations about food</div>
   <div class="rtext">
-    <p><strong>Key collocations:</strong> <span class="hi" onclick="addW(this)" data-w="eating habits" data-ru="привычки питания">eating habits</span>, <span class="hi" onclick="addW(this)" data-w="junk food" data-ru="нездоровая пища">junk food</span>, <span class="hi" onclick="addW(this)" data-w="go on a diet" data-ru="сесть на диету">go on a diet</span>, <span class="hi" onclick="addW(this)" data-w="processed foods" data-ru="обработанные продукты">processed foods</span>, <span class="hi" onclick="addW(this)" data-w="food additives" data-ru="пищевые добавки">food additives</span>, <span class="hi" onclick="addW(this)" data-w="weight gain" data-ru="набор веса">weight gain</span>, <span class="hi" onclick="addW(this)" data-w="balanced diet" data-ru="сбалансированное питание">balanced diet</span>, <span class="hi" onclick="addW(this)" data-w="nourishing meals" data-ru="питательные блюда">nourishing meals</span>, <span class="hi" onclick="addW(this)" data-w="organic food" data-ru="органическая пища">organic food</span>, <span class="hi" onclick="addW(this)" data-w="fresh produce" data-ru="свежие продукты">fresh produce</span>, <span class="hi" onclick="addW(this)" data-w="quick snack" data-ru="быстрый перекус">quick snack</span>, <span class="hi" onclick="addW(this)" data-w="heartily stew" data-ru="сытное рагу">hearty stew</span>, <span class="hi" onclick="addW(this)" data-w="healthy appetite" data-ru="хороший аппетит">healthy appetite</span>, <span class="hi" onclick="addW(this)" data-w="food poisoning" data-ru="пищевое отравление">food poisoning</span>.</p>
+    <p><strong>Key collocations:</strong> <span class="hi" onclick="addW(this)" data-w="eating habits" data-ru="привычки питания">eating habits</span>, <span class="hi" onclick="addW(this)" data-w="junk food" data-ru="нездоровая пища">junk food</span>, <span class="hi" onclick="addW(this)" data-w="go on a diet" data-ru="сесть на диету">go on a diet</span>, <span class="hi" onclick="addW(this)" data-w="processed foods" data-ru="обработанные продукты">processed foods</span>, <span class="hi" onclick="addW(this)" data-w="food additives" data-ru="пищевые добавки">food additives</span>, <span class="hi" onclick="addW(this)" data-w="weight gain" data-ru="набор веса">weight gain</span>, <span class="hi" onclick="addW(this)" data-w="balanced diet" data-ru="сбалансированное питание">balanced diet</span>, <span class="hi" onclick="addW(this)" data-w="nourishing meals" data-ru="питательные блюда">nourishing meals</span>, <span class="hi" onclick="addW(this)" data-w="organic food" data-ru="органическая пища">organic food</span>, <span class="hi" onclick="addW(this)" data-w="fresh produce" data-ru="свежие продукты">fresh produce</span>, <span class="hi" onclick="addW(this)" data-w="quick snack" data-ru="быстрый перекус">quick snack</span>, <span class="hi" onclick="addW(this)" data-w="hearty stew" data-ru="сытное рагу">hearty stew</span>, <span class="hi" onclick="addW(this)" data-w="healthy appetite" data-ru="хороший аппетит">healthy appetite</span>, <span class="hi" onclick="addW(this)" data-w="food poisoning" data-ru="пищевое отравление">food poisoning</span>.</p>
   </div>
   <div class="nav-row">
     <button class="btn btn-outline" onclick="goTo(6)">← Lesson 6</button>
@@ -911,10 +904,9 @@ body.student-mode .speak-block{display:block}
   </div>
 </section>
 
-<!-- LESSON 26-50: Continue compact format -->
-<!-- ... (remaining lessons 26-50 would continue here) ... -->
-
+<!-- ============================================================ -->
 <!-- DICT FAB -->
+<!-- ============================================================ -->
 <button class="dict-fab" onclick="openDict()">📖</button>
 <div class="dict-panel" id="dpanel">
   <div class="dict-head"><span class="dict-head-t">📖 My Words (<span id="dcnt">0</span>)</span><button class="dict-x" onclick="closeDict()">✕</button></div>
@@ -932,81 +924,83 @@ let score=0, okCount=0, curSec=1;
 
 // Flashcard data for each lesson
 const FC1 = [
-  {w:"immediate family",tc:"tc-fam",tl:"Family",ru:"ближайшие родственники",m:"Closest relatives",ex:"My immediate family is just my parents."},
-  {w:"extended family",tc:"tc-fam",tl:"Family",ru:"расширенная семья",m:"All relatives",ex:"We invite the extended family for every holiday."},
-  {w:"close-knit family",tc:"tc-fam",tl:"Family",ru:"дружная семья",m:"Strong bonds",ex:"We're a close-knit family."},
-  {w:"dysfunctional family",tc:"tc-fam",tl:"Family",ru:"неблагополучная семья",m:"Unhealthy relationships",ex:"The film is about a dysfunctional family."},
-  {w:"broken home",tc:"tc-fam",tl:"Family",ru:"неполная семья",m:"Parents separated",ex:"He grew up in a broken home."},
-  {w:"carefree childhood",tc:"tc-chi",tl:"Childhood",ru:"беззаботное детство",m:"No worries",ex:"She had a carefree childhood."},
-  {w:"troubled childhood",tc:"tc-chi",tl:"Childhood",ru:"трудное детство",m:"Hardship",ex:"Despite a troubled childhood, she worked hard."},
-  {w:"bitter divorce",tc:"tc-div",tl:"Divorce",ru:"горький развод",m:"Painful divorce",ex:"After a bitter divorce, they refused to speak."},
-  {w:"messy divorce",tc:"tc-div",tl:"Divorce",ru:"запутанный развод",m:"Complicated divorce",ex:"The messy divorce lasted three years."},
-  {w:"divorce settlement",tc:"tc-div",tl:"Divorce",ru:"соглашение о разделе",m:"Legal division",ex:"The settlement gave her the house."},
-  {w:"joint custody",tc:"tc-cus",tl:"Custody",ru:"совместная опека",m:"Both parents share",ex:"They agreed on joint custody."},
-  {w:"sole custody",tc:"tc-cus",tl:"Custody",ru:"единоличная опека",m:"One parent only",ex:"The judge awarded sole custody."},
+  {w:"immediate family",tc:"tc-fam",tl:"Family",ru:"ближайшие родственники",m:"Your closest relatives: parents and siblings",ex:"My immediate family is just my parents and sister."},
+  {w:"extended family",tc:"tc-fam",tl:"Family",ru:"расширенная семья",m:"All relatives including grandparents, aunts, cousins",ex:"We invite the extended family for every holiday."},
+  {w:"close-knit family",tc:"tc-fam",tl:"Family",ru:"дружная семья",m:"Strong bonds, everyone supports each other",ex:"We're a close-knit family — we talk every day."},
+  {w:"dysfunctional family",tc:"tc-fam",tl:"Family",ru:"неблагополучная семья",m:"Unhealthy relationships with serious problems",ex:"The film is about a dysfunctional family."},
+  {w:"broken home",tc:"tc-fam",tl:"Family",ru:"неполная семья",m:"A family where parents have separated",ex:"He grew up in a broken home but became successful."},
+  {w:"carefree childhood",tc:"tc-chi",tl:"Childhood",ru:"беззаботное детство",m:"A childhood with no worries, full of fun",ex:"She had a carefree childhood, playing outside every day."},
+  {w:"troubled childhood",tc:"tc-chi",tl:"Childhood",ru:"трудное детство",m:"A childhood marked by hardship or emotional pain",ex:"Despite a troubled childhood, she worked hard."},
+  {w:"bitter divorce",tc:"tc-div",tl:"Divorce",ru:"горький развод",m:"A painful divorce with anger and bad feelings",ex:"After a bitter divorce, they refused to speak."},
+  {w:"messy divorce",tc:"tc-div",tl:"Divorce",ru:"запутанный развод",m:"A divorce with many conflicts and complications",ex:"The messy divorce lasted three years."},
+  {w:"divorce settlement",tc:"tc-div",tl:"Divorce",ru:"соглашение о разделе имущества",m:"Legal decisions about dividing money and possessions",ex:"The divorce settlement gave her the house."},
+  {w:"joint custody",tc:"tc-cus",tl:"Custody",ru:"совместная опека",m:"Both parents share responsibility for the children",ex:"They agreed on joint custody for their daughter."},
+  {w:"sole custody",tc:"tc-cus",tl:"Custody",ru:"единоличная опека",m:"Only one parent has legal responsibility",ex:"The judge awarded sole custody to the mother."},
 ];
 
 const FC2 = [
-  {w:"make friends",tc:"tc-fam",tl:"Relationships",ru:"заводить друзей",m:"Form friendships",ex:"It's hard to make friends in a new city."},
-  {w:"close friends",tc:"tc-fam",tl:"Relationships",ru:"близкие друзья",m:"Strong friendship",ex:"She has only a few close friends."},
-  {w:"fall in love",tc:"tc-fam",tl:"Relationships",ru:"влюбляться",m:"Develop romantic feelings",ex:"They fell in love immediately."},
-  {w:"love at first sight",tc:"tc-fam",tl:"Relationships",ru:"любовь с первого взгляда",m:"Instant love",ex:"Do you believe in love at first sight?"},
-  {w:"soul mate",tc:"tc-fam",tl:"Relationships",ru:"родственная душа",m:"Destined partner",ex:"He believes she's his soul mate."},
-  {w:"significant other",tc:"tc-fam",tl:"Relationships",ru:"вторая половинка",m:"Partner",ex:"She introduced her significant other."},
-  {w:"childhood sweetheart",tc:"tc-fam",tl:"Relationships",ru:"первая любовь",m:"Childhood partner",ex:"He married his childhood sweetheart."},
-  {w:"make a commitment",tc:"tc-fam",tl:"Relationships",ru:"взять обязательства",m:"Promise to be together",ex:"They decided to make a commitment."},
-  {w:"have an affair",tc:"tc-fam",tl:"Relationships",ru:"иметь роман",m:"Be unfaithful",ex:"He had an affair with his colleague."},
-  {w:"cheat on",tc:"tc-fam",tl:"Relationships",ru:"изменять",m:"Be unfaithful",ex:"She was cheating on her husband."},
+  {w:"make friends",tc:"tc-fam",tl:"Relationships",ru:"заводить друзей",m:"To form friendships with new people",ex:"It's hard to make friends in a new city."},
+  {w:"close friends",tc:"tc-fam",tl:"Relationships",ru:"близкие друзья",m:"Friends with whom you have a very strong relationship",ex:"She has only a few close friends."},
+  {w:"fall in love",tc:"tc-fam",tl:"Relationships",ru:"влюбляться",m:"To develop romantic feelings for someone",ex:"They fell in love immediately."},
+  {w:"love at first sight",tc:"tc-fam",tl:"Relationships",ru:"любовь с первого взгляда",m:"Falling in love immediately upon meeting someone",ex:"Do you believe in love at first sight?"},
+  {w:"soul mate",tc:"tc-fam",tl:"Relationships",ru:"родственная душа",m:"Someone you are destined to be with",ex:"He believes she's his soul mate."},
+  {w:"significant other",tc:"tc-fam",tl:"Relationships",ru:"вторая половинка",m:"Your boyfriend, girlfriend, husband, or wife",ex:"She introduced her significant other."},
+  {w:"childhood sweetheart",tc:"tc-fam",tl:"Relationships",ru:"первая любовь",m:"A boyfriend or girlfriend from childhood",ex:"He married his childhood sweetheart."},
+  {w:"make a commitment",tc:"tc-fam",tl:"Relationships",ru:"взять на себя обязательства",m:"To promise to be together in a serious relationship",ex:"They decided to make a commitment."},
+  {w:"have an affair",tc:"tc-fam",tl:"Relationships",ru:"иметь роман на стороне",m:"To have a sexual relationship with someone other than your spouse",ex:"He had an affair with his colleague."},
+  {w:"cheat on",tc:"tc-fam",tl:"Relationships",ru:"изменять",m:"To be unfaithful to your partner",ex:"She was cheating on her husband."},
 ];
 
 const FC3 = [
   {w:"gorgeous",tc:"tc-fam",tl:"Appearance",ru:"потрясающе красивая",m:"Extremely beautiful",ex:"She is absolutely gorgeous."},
   {w:"jet-black hair",tc:"tc-fam",tl:"Appearance",ru:"черные как смоль волосы",m:"Perfectly black hair",ex:"She has jet-black hair."},
   {w:"pale blue eyes",tc:"tc-fam",tl:"Appearance",ru:"светло-голубые глаза",m:"Light blue eyes",ex:"He has pale blue eyes."},
-  {w:"radiant complexion",tc:"tc-fam",tl:"Appearance",ru:"сияющий цвет лица",m:"Healthy skin",ex:"She has a radiant complexion."},
-  {w:"hourglass figure",tc:"tc-fam",tl:"Appearance",ru:"фигура песочные часы",m:"Curvy figure",ex:"She has an hourglass figure."},
-  {w:"slender waist",tc:"tc-fam",tl:"Appearance",ru:"тонкая талия",m:"Thin waist",ex:"She has a slender waist."},
-  {w:"bear a striking resemblance",tc:"tc-fam",tl:"Appearance",ru:"иметь поразительное сходство",m:"Look very similar",ex:"She bears a striking resemblance to a celebrity."},
-  {w:"unkempt hair",tc:"tc-fam",tl:"Appearance",ru:"неухоженные волосы",m:"Messy hair",ex:"His unkempt hair needs a cut."},
-  {w:"athletic build",tc:"tc-fam",tl:"Appearance",ru:"спортивное телосложение",m:"Muscular body",ex:"He has an athletic build."},
+  {w:"radiant complexion",tc:"tc-fam",tl:"Appearance",ru:"сияющий цвет лица",m:"Skin that appears healthy and full of energy",ex:"She has a radiant complexion."},
+  {w:"hourglass figure",tc:"tc-fam",tl:"Appearance",ru:"фигура песочные часы",m:"Large breasts and hips with a small waist",ex:"She has an hourglass figure."},
+  {w:"slender waist",tc:"tc-fam",tl:"Appearance",ru:"тонкая талия",m:"A thin waist",ex:"She has a slender waist."},
+  {w:"bear a striking resemblance",tc:"tc-fam",tl:"Appearance",ru:"иметь поразительное сходство",m:"To look extremely similar to someone",ex:"She bears a striking resemblance to a celebrity."},
+  {w:"unkempt",tc:"tc-fam",tl:"Appearance",ru:"неухоженный",m:"Messy, not taken care of",ex:"His unkempt hair needs a cut."},
+  {w:"athletic build",tc:"tc-fam",tl:"Appearance",ru:"спортивное телосложение",m:"A body with a lot of muscles",ex:"He has an athletic build."},
   {w:"broad shoulders",tc:"tc-fam",tl:"Appearance",ru:"широкие плечи",m:"Wide shoulders",ex:"He has broad shoulders."},
 ];
 
 const FC4 = [
   {w:"painfully shy",tc:"tc-fam",tl:"Character",ru:"очень застенчивый",m:"Extremely shy",ex:"She was painfully shy as a child."},
-  {w:"vivid imagination",tc:"tc-fam",tl:"Character",ru:"яркое воображение",m:"Creative imagination",ex:"He has a vivid imagination."},
-  {w:"outgoing personality",tc:"tc-fam",tl:"Character",ru:"общительная личность",m:"Sociable",ex:"She has an outgoing personality."},
-  {w:"sense of humor",tc:"tc-fam",tl:"Character",ru:"чувство юмора",m:"Ability to make laugh",ex:"He has a great sense of humor."},
-  {w:"fiercely loyal",tc:"tc-fam",tl:"Character",ru:"безгранично преданный",m:"Extremely loyal",ex:"She is fiercely loyal to her friends."},
-  {w:"show true colors",tc:"tc-fam",tl:"Character",ru:"показать истинное лицо",m:"Reveal true personality",ex:"He showed his true colors eventually."},
-  {w:"bear a grudge",tc:"tc-fam",tl:"Character",ru:"затаить обиду",m:"Hold a grudge",ex:"She bears a grudge against him."},
-  {w:"low self-esteem",tc:"tc-fam",tl:"Character",ru:"низкая самооценка",m:"Lack of confidence",ex:"He suffers from low self-esteem."},
-  {w:"come out of shell",tc:"tc-fam",tl:"Character",ru:"выйти из скорлупы",m:"Become more confident",ex:"She has come out of her shell."},
-  {w:"superiority complex",tc:"tc-fam",tl:"Character",ru:"комплекс превосходства",m:"Feeling superior",ex:"He has a superiority complex."},
+  {w:"vivid imagination",tc:"tc-fam",tl:"Character",ru:"яркое воображение",m:"A creative and colorful imagination",ex:"He has a vivid imagination."},
+  {w:"outgoing personality",tc:"tc-fam",tl:"Character",ru:"общительная личность",m:"Liking to be friendly and sociable",ex:"She has an outgoing personality."},
+  {w:"sense of humor",tc:"tc-fam",tl:"Character",ru:"чувство юмора",m:"Ability to make other people laugh",ex:"He has a great sense of humor."},
+  {w:"fiercely loyal",tc:"tc-fam",tl:"Character",ru:"безгранично преданный",m:"Extremely loyal and devoted",ex:"She is fiercely loyal to her friends."},
+  {w:"show true colors",tc:"tc-fam",tl:"Character",ru:"показать истинное лицо",m:"To reveal your true personality",ex:"He showed his true colors eventually."},
+  {w:"bear a grudge",tc:"tc-fam",tl:"Character",ru:"затаить обиду",m:"To continue feeling angry about something",ex:"She bears a grudge against him."},
+  {w:"low self-esteem",tc:"tc-fam",tl:"Character",ru:"низкая самооценка",m:"Considering yourself inferior",ex:"He suffers from low self-esteem."},
+  {w:"come out of shell",tc:"tc-fam",tl:"Character",ru:"выйти из скорлупы",m:"To become less shy and more confident",ex:"She has come out of her shell."},
+  {w:"superiority complex",tc:"tc-fam",tl:"Character",ru:"комплекс превосходства",m:"Considering yourself superior to others",ex:"He has a superiority complex."},
 ];
 
 const FC5 = [
-  {w:"roller coaster of emotions",tc:"tc-fam",tl:"Feelings",ru:"американские горки эмоций",m:"Many emotions",ex:"It was a roller coaster of emotions."},
+  {w:"roller coaster of emotions",tc:"tc-fam",tl:"Feelings",ru:"американские горки эмоций",m:"Many different emotions one after another",ex:"It was a roller coaster of emotions."},
   {w:"worried sick",tc:"tc-fam",tl:"Feelings",ru:"очень переживал",m:"Very worried",ex:"She was worried sick about him."},
-  {w:"seething with anger",tc:"tc-fam",tl:"Feelings",ru:"кипеть от гнева",m:"Very angry",ex:"He was seething with anger."},
-  {w:"visibly disappointed",tc:"tc-fam",tl:"Feelings",ru:"явно разочарована",m:"Clearly disappointed",ex:"She was visibly disappointed."},
-  {w:"bottle up emotions",tc:"tc-fam",tl:"Feelings",ru:"подавлять эмоции",m:"Hide emotions",ex:"He bottles up his emotions."},
-  {w:"lose temper",tc:"tc-fam",tl:"Feelings",ru:"выйти из себя",m:"Get angry",ex:"I lost my temper."},
+  {w:"seething with anger",tc:"tc-fam",tl:"Feelings",ru:"кипеть от гнева",m:"Ready to explode with anger",ex:"He was seething with anger."},
+  {w:"visibly disappointed",tc:"tc-fam",tl:"Feelings",ru:"явно разочарована",m:"It was obvious that she was disappointed",ex:"She was visibly disappointed."},
+  {w:"bottle up emotions",tc:"tc-fam",tl:"Feelings",ru:"подавлять эмоции",m:"To keep emotions hidden inside",ex:"He bottles up his emotions."},
+  {w:"lose temper",tc:"tc-fam",tl:"Feelings",ru:"выйти из себя",m:"To lose control and show anger",ex:"I lost my temper."},
   {w:"deeply depressed",tc:"tc-fam",tl:"Feelings",ru:"глубоко подавлена",m:"Very depressed",ex:"She became deeply depressed."},
-  {w:"emotional wreck",tc:"tc-fam",tl:"Feelings",ru:"эмоциональный развалина",m:"Very upset",ex:"He was an emotional wreck."},
+  {w:"emotional wreck",tc:"tc-fam",tl:"Feelings",ru:"эмоциональный развалина",m:"A person who is very sad, confused, and upset",ex:"He was an emotional wreck."},
   {w:"pleasantly surprised",tc:"tc-fam",tl:"Feelings",ru:"приятно удивлен",m:"Surprised in a good way",ex:"I was pleasantly surprised."},
-  {w:"overwhelmed with emotion",tc:"tc-fam",tl:"Feelings",ru:"переполнен эмоциями",m:"Strong emotion",ex:"She was overwhelmed with emotion."},
+  {w:"overwhelmed with emotion",tc:"tc-fam",tl:"Feelings",ru:"переполнен эмоциями",m:"When emotion is so strong it's difficult to think or speak",ex:"She was overwhelmed with emotion."},
 ];
 
-// Translation data for each lesson (Russian -> English)
+// Translation data for each lesson (Russian -> English) - 8 sentences each
 const TRANS_DATA = {
   1: [
+    {ru: "Твои родители и братья с сёстрами — это твои ближайшие родственники.", en: "Your parents and siblings are your immediate family."},
     {ru: "Мои родители прошли через горький развод.", en: "My parents went through a bitter divorce."},
     {ru: "Судья присудил единоличную опеку матери.", en: "The judge awarded sole custody to the mother."},
     {ru: "Несмотря на трудное детство, она добилась успеха.", en: "Despite a troubled childhood, she became very successful."},
     {ru: "Мы дружная семья — все помогают друг другу.", en: "We're a close-knit family — everyone helps each other."},
     {ru: "Они остались в хороших отношениях ради детей.", en: "They stayed on good terms for the sake of the children."},
-    {ru: "Она выросла в неполной семье, но создала свой счастливый дом.", en: "She grew up in a broken home but created her own happy family."}
+    {ru: "Она выросла в неполной семье, но создала свой счастливый дом.", en: "She grew up in a broken home but created her own happy family."},
+    {ru: "Мать-одиночка воспитывает двоих детей.", en: "A single mother is raising two children."}
   ],
   2: [
     {ru: "Трудно заводить друзей в новом городе.", en: "It's hard to make friends in a new city."},
@@ -1014,7 +1008,9 @@ const TRANS_DATA = {
     {ru: "Он верит, что она его родственная душа.", en: "He believes she's his soul mate."},
     {ru: "Она представила свою вторую половинку.", en: "She introduced her significant other."},
     {ru: "Они решили взять на себя обязательства.", en: "They decided to make a commitment."},
-    {ru: "У него был роман на стороне.", en: "He had an affair."}
+    {ru: "У него был роман на стороне с коллегой.", en: "He had an affair with his colleague."},
+    {ru: "Она изменяла мужу в течение двух лет.", en: "She was cheating on her husband for two years."},
+    {ru: "Он женился на своей первой любви.", en: "He married his childhood sweetheart."}
   ],
   3: [
     {ru: "Она абсолютно потрясающе красивая.", en: "She is absolutely gorgeous."},
@@ -1022,7 +1018,9 @@ const TRANS_DATA = {
     {ru: "У него светло-голубые глаза.", en: "He has pale blue eyes."},
     {ru: "У неё сияющий цвет лица.", en: "She has a radiant complexion."},
     {ru: "У неё фигура песочные часы.", en: "She has an hourglass figure."},
-    {ru: "Она имеет поразительное сходство со знаменитостью.", en: "She bears a striking resemblance to a celebrity."}
+    {ru: "Она имеет поразительное сходство со знаменитостью.", en: "She bears a striking resemblance to a celebrity."},
+    {ru: "У него неухоженные волосы и борода.", en: "He has unkempt hair and a beard."},
+    {ru: "У него спортивное телосложение с широкими плечами.", en: "He has an athletic build with broad shoulders."}
   ],
   4: [
     {ru: "В детстве она была очень застенчивой.", en: "She was painfully shy as a child."},
@@ -1030,7 +1028,9 @@ const TRANS_DATA = {
     {ru: "У неё общительная личность.", en: "She has an outgoing personality."},
     {ru: "У него отличное чувство юмора.", en: "He has a great sense of humor."},
     {ru: "Она безгранично преданна своим друзьям.", en: "She is fiercely loyal to her friends."},
-    {ru: "Он затаил обиду на неё.", en: "He bears a grudge against her."}
+    {ru: "Он затаил обиду на неё после той шутки.", en: "He bears a grudge against her after that prank."},
+    {ru: "У него низкая самооценка, и ему нужна поддержка.", en: "He has low self-esteem and needs support."},
+    {ru: "Она вышла из своей скорлупы и стала увереннее.", en: "She came out of her shell and became more confident."}
   ],
   5: [
     {ru: "Это были американские горки эмоций.", en: "It was a roller coaster of emotions."},
@@ -1038,7 +1038,9 @@ const TRANS_DATA = {
     {ru: "Он кипел от гнева.", en: "He was seething with anger."},
     {ru: "Она была явно разочарована.", en: "She was visibly disappointed."},
     {ru: "Он подавляет свои эмоции.", en: "He bottles up his emotions."},
-    {ru: "Я вышел из себя.", en: "I lost my temper."}
+    {ru: "Я вышел из себя и пожалел об этом.", en: "I lost my temper and regretted it."},
+    {ru: "Она стала глубоко подавленной после потери работы.", en: "She became deeply depressed after losing her job."},
+    {ru: "Я был приятно удивлён их помощью.", en: "I was pleasantly surprised by their help."}
   ]
 };
 
@@ -1056,9 +1058,9 @@ const FILL_DATA = {
 };
 
 // Comprehension data
-const CQ1 = [{q:"Why is Emma stressed?",opts:["Her brother is ill","Her parents are getting divorced","She has a new job"],ok:1},{q:"What type of custody does the mother want?",opts:["Joint custody","No custody","Sole custody"],ok:2},{q:"What does Emma hope will happen?",opts:["Her parents will get back together","Her parents will stay on good terms","Her brother will move away"],ok:1}];
+const CQ1 = [{q:"What is your immediate family?",opts:["Only your parents","Your parents and siblings","All your relatives"],ok:1},{q:"What type of divorce has bad feelings?",opts:["Mutual divorce","Bitter divorce","Messy divorce"],ok:1},{q:"What does 'stay on good terms' mean?",opts:["To fight","To have a polite relationship","To get divorced"],ok:1}];
 const CQ2 = [{q:"What does 'make friends' mean?",opts:["To create friendships","To be a good person","To work together"],ok:0},{q:"What is a 'soul mate'?",opts:["Someone you work with","Someone you are destined to be with","A friend from childhood"],ok:1},{q:"What does 'cheat on' mean?",opts:["To be unfaithful","To help someone","To break a promise"],ok:0}];
-const CQ3 = [{q:"What color are Joanna's eyes?",opts:["Green","Pale blue","Brown"],ok:1},{q:"What figure does Joanna have?",opts:["Athletic","Hourglass","Slender"],ok:1},{q:"What does Joanna's boyfriend need to do?",opts:["Shave","Comb his hair","Trim his beard"],ok:2}];
+const CQ3 = [{q:"What color are Joanna's eyes?",opts:["Green","Pale blue","Brown"],ok:1},{q:"What figure does Joanna have?",opts:["Athletic","Hourglass","Slender"],ok:1},{q:"What does Joanna's boyfriend have on his face?",opts:["A mustache","A beard","Both a mustache and a beard"],ok:2}];
 const CQ4 = [{q:"What was the author as a teenager?",opts:["Outgoing","Painfully shy","Confident"],ok:1},{q:"What did the best friend do to the author?",opts:["Helped her","Played a prank","Gave her advice"],ok:1},{q:"What resolution did the author make?",opts:["Speak more","Put others first","Be more loyal"],ok:1}];
 const CQ5 = [{q:"What did the author feel when his son was born?",opts:["Indifferent","A roller coaster of emotions","Depressed"],ok:1},{q:"What happened during the delivery?",opts:["Everything went smoothly","There were complications","The baby was born at home"],ok:1},{q:"What did the author lose?",opts:["His wallet","His patience","His temper"],ok:2}];
 
@@ -1116,7 +1118,7 @@ function addSc(p){score+=p;okCount++;document.getElementById('pscore').textConte
 function toggleT(){const on=document.getElementById('tog').checked;document.querySelectorAll('.tnote').forEach(e=>e.classList.toggle('show',on));}
 
 // ============================================================
-// TRANSLATION REVEAL (NEW)
+// TRANSLATION REVEAL
 // ============================================================
 let transState = {};
 
@@ -1377,15 +1379,10 @@ if(localStorage.getItem('langust_mode')==='student')setTimeout(toggleMode,100);
 // INIT
 // ============================================================
 function init(){
-  // Build flashcards
   buildFC(1,FC1); buildFC(2,FC2); buildFC(3,FC3); buildFC(4,FC4); buildFC(5,FC5);
-  // Build match
   buildMatch(1); buildMatch(2); buildMatch(4);
-  // Build fill in
   buildFill(1); buildFill(2); buildFill(3); buildFill(5);
-  // Build comprehension
   buildComp(1,CQ1); buildComp(2,CQ2); buildComp(3,CQ3); buildComp(4,CQ4); buildComp(5,CQ5);
-  // Build translation exercises
   buildTrans(1); buildTrans(2); buildTrans(3); buildTrans(4); buildTrans(5);
   renderDict(); buildNavList(); goTo(1);
 }
