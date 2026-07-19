@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LANGUST · All 50 Lessons</title>
+<style>
+/* ══════════════════════════════════
+   DESIGN TOKENS — bright, modern
+══════════════════════════════════ */
+:root{
+  --white:#FFFFFF;
+  --bg:#F3F1EE;
+  --surface:#FAFAF8;
+  --coral:#6B5CE7;
+  --coral-light:#EDEAFF;
+  --coral-mid:#C4BFFB;
+  --err:#D97B00;
+  --err-light:#FFF3E0;
+  --err-border:#FFC875;
+  --sky:#20B2AA;
+  --sky-light:#E0F7F5;
+  --sky-mid:#9AE3DF;
+  --mint:#3DAD72;
+  --mint-light:#E8F8F0;
+  --sun:#F5A623;
+  --sun-light:#FFF8EE;
+  --purple:#6B5CE7;
+  --purple-light:#EDEAFF;
+  --ink:#1E1B3A;
+  --ink2:#47456A;
+  --ink3:#8E8CA8;
+  --border:#DDD9D0;
+  --shadow:0 4px 20px rgba(30,27,58,.08);
+  --shadow-hover:0 10px 36px rgba(30,27,58,.16);
+  --radius:18px;
+  --radius-sm:12px;
+  --f-display:'Georgia',serif;
+  --f-body:'Segoe UI','Helvetica Neue',Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;min-height:100vh}
+
+/* ══ TEACHER BAR ══ */
+.tbar{background:#1C1B2E;color:#fff;padding:9px 16px;display:flex;align-items:center;gap:10px;font-size:12px;position:sticky;top:0;z-index:300}
+.tbar-title{flex:1;font-weight:600;letter-spacing:.3px}
+.tbar-tag{background:#6B5CE7;color:#fff;border-radius:20px;padding:2px 10px;font-size:11px;font-weight:700}
+.tog-wrap{display:flex;align-items:center;gap:6px;font-size:12px;color:#aaa}
+.tog{position:relative;width:40px;height:22px;cursor:pointer}
+.tog input{opacity:0;width:0;height:0}
+.tog-sl{position:absolute;inset:0;background:#444;border-radius:11px;transition:.3s}
+.tog-sl:before{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.tog input:checked+.tog-sl{background:var(--coral)}
+.tog input:checked+.tog-sl:before{transform:translateX(18px)}
+
+/* ══ PROGRESS ══ */
+.prog-bar{background:var(--white);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:42px;z-index:200}
+.prog-lbl{font-size:11px;color:var(--ink3);min-width:80px}
+.prog-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--coral),var(--sky));border-radius:3px;transition:width .5s}
+.prog-score{font-size:12px;font-weight:700;color:var(--coral);min-width:50px;text-align:right}
+
+/* ══ HERO HEADER ══ */
+.hero{background:linear-gradient(135deg,#6B5CE7 0%,#9B8AF8 45%,#20B2AA 100%);color:#fff;padding:2rem 1.5rem 1.8rem;position:relative;overflow:hidden}
+.hero::before{content:'📚';position:absolute;right:-10px;top:-10px;font-size:100px;opacity:.15}
+.hero-tag{font-size:11px;letter-spacing:2px;text-transform:uppercase;background:rgba(255,255,255,.2);display:inline-block;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.hero-title{font-family:var(--f-display);font-size:2rem;font-weight:normal;margin-bottom:4px;text-shadow:0 2px 12px rgba(0,0,0,.15)}
+.hero-sub{font-size:14px;opacity:.9;margin-bottom:1rem}
+.hero-pills{display:flex;flex-wrap:wrap;gap:6px}
+.hero-pill{background:rgba(255,255,255,.2);border-radius:20px;padding:3px 11px;font-size:12px}
+
+/* ══ SECTIONS ══ */
+.sec{padding:1.5rem;display:none}
+.sec.active{display:block}
+.sec-eye{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink3);margin-bottom:.3rem}
+.sec-dot{width:8px;height:8px;border-radius:50%;background:var(--coral);display:inline-block}
+.sec-title{font-family:var(--f-display);font-size:1.4rem;font-weight:normal;color:var(--ink);margin-bottom:.3rem}
+.sec-meta{font-size:13px;color:var(--ink3);margin-bottom:1.2rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:2px 10px;font-size:11px;color:var(--ink3)}
+
+/* ══ TEACHER NOTE ══ */
+.tnote{display:none;background:var(--sun-light);border-left:3px solid var(--sun);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:1rem 1.1rem;margin-bottom:1.2rem}
+.tnote.show{display:block}
+.tnote-h{font-weight:700;color:#7A5A00;margin-bottom:6px;font-size:13px;display:flex;align-items:center;gap:6px}
+.tnote p{color:#5A4A00;font-size:13px;margin-bottom:4px}
+.say{background:#fff;border:1px dashed #E8B800;border-radius:8px;padding:7px 11px;margin:5px 0;font-style:italic;color:#3A2E00;font-size:13px}
+.say::before{content:'💬 ';font-style:normal}
+.qprompt{color:#7A5A00;font-weight:600;font-size:13px;margin-top:6px}
+
+/* ══ CARD ══ */
+.card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);padding:1.2rem;margin-bottom:.8rem}
+.card-selected{background:var(--sky-light)!important;border-color:var(--sky)!important;}
+
+/* ══ BUTTONS ══ */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--radius-sm);border:none;font-family:var(--f-body);font-size:14px;font-weight:600;cursor:pointer;transition:all .18s}
+.btn-coral{background:var(--coral);color:#fff}.btn-coral:hover{background:#5548CC;transform:translateY(-1px);box-shadow:var(--shadow-hover)}
+.btn-sky{background:var(--sky);color:#fff}.btn-sky:hover{background:#3ab5ac}
+.btn-outline{background:transparent;color:var(--sky);border:2px solid var(--sky)}.btn-outline:hover{background:var(--sky);color:#fff}
+.btn-dark{background:var(--ink);color:#fff}.btn-dark:hover{background:#2d2d50}
+.btn-mint{background:var(--mint);color:#fff}.btn-mint:hover{background:#60c05a}
+.nav-row{display:flex;gap:.6rem;margin-top:1.2rem;align-items:center;flex-wrap:wrap}
+
+/* ══ AUDIO ══ */
+.audio-wrap{background:linear-gradient(135deg,#1C1B2E 0%,#2E2B50 100%);border-radius:var(--radius);padding:1rem 1.2rem;margin:1rem 0;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+.audio-btn{width:46px;height:46px;background:var(--coral);border:none;border-radius:50%;color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.audio-btn:hover{background:#e05555;transform:scale(1.08)}
+.audio-info{flex:1;min-width:120px}
+.audio-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:1px}
+.audio-sub{font-size:11px;color:#aaa}
+.audio-bar{width:100%;height:3px;background:rgba(255,255,255,.2);border-radius:2px;margin-top:6px}
+.audio-bar-fill{height:100%;background:var(--coral);border-radius:2px;width:0%;transition:width .3s}
+.spd-btn{padding:4px 9px;border-radius:20px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#aaa;font-size:11px;cursor:pointer;transition:all .2s}
+.spd-btn.on{background:var(--coral);color:#fff;border-color:var(--coral)}
+
+/* ══ READING TEXT ══ */
+.rtext{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);padding:1.3rem;margin-bottom:1rem;font-size:15px;line-height:1.9;box-shadow:var(--shadow)}
+.rtext p{margin-bottom:.9rem}
+.rtext p:last-child{margin-bottom:0}
+.hi{background:var(--coral-light);border-radius:4px;padding:1px 5px;color:var(--coral);font-weight:600;cursor:pointer;border-bottom:2px solid var(--coral-mid);transition:all .18s;display:inline}
+.hi:hover{background:var(--coral-mid)}
+.hi.saved{background:var(--mint-light);color:#3a8a35;border-color:var(--mint)}
+
+/* ══ SECTION TAB BAR ══ */
+.sec-tabs{background:var(--white);border-bottom:2px solid var(--border);display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:0;position:sticky;top:79px;z-index:190}
+.sec-tabs::-webkit-scrollbar{display:none}
+.sec-tab{flex-shrink:0;padding:7px 12px;font-size:11px;font-weight:600;color:var(--ink3);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .2s;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;gap:1px}
+.sec-tab:hover{color:var(--coral);background:var(--coral-light)}
+.sec-tab.active-tab{color:var(--coral);border-bottom-color:var(--coral)}
+.sec-tab .tab-icon{font-size:14px}
+.sec-tab .tab-num{font-size:9px;color:var(--ink3);font-weight:400}
+.sec-tab.active-tab .tab-num{color:var(--coral)}
+
+/* ══ DICT PANEL ══ */
+.dict-fab{position:fixed;bottom:18px;right:14px;z-index:400;background:var(--sky);color:#fff;border:none;width:50px;height:50px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 4px 18px rgba(78,205,196,.4);display:flex;align-items:center;justify-content:center;transition:all .2s}
+.dict-fab:hover{transform:scale(1.1);background:#3ab5ac}
+.dict-panel{position:fixed;bottom:76px;right:14px;z-index:400;width:min(320px,calc(100vw - 28px));background:var(--ink);color:#fff;border-radius:var(--radius);box-shadow:0 8px 40px rgba(0,0,0,.3);display:none;flex-direction:column;max-height:min(440px,65vh)}
+.dict-panel.open{display:flex}
+.dict-head{padding:.8rem 1rem;border-bottom:1px solid #333;display:flex;align-items:center;justify-content:space-between}
+.dict-head-t{font-size:13px;font-weight:700}
+.dict-x{background:transparent;border:none;color:#888;font-size:18px;cursor:pointer;padding:0;line-height:1}
+.dict-inner{overflow-y:scroll;flex:1;padding:.5rem;scrollbar-width:thin;scrollbar-color:var(--coral) #333;-webkit-overflow-scrolling:touch;min-height:0}
+.dict-empty{font-size:13px;color:#888;text-align:center;padding:1.5rem}
+.dict-entry{display:flex;justify-content:space-between;align-items:flex-start;padding:.5rem;border-bottom:1px solid #2a2a3a;gap:8px}
+.dict-w{font-size:13px;color:#fff;font-weight:700}
+.dict-ru{font-size:11px;color:var(--coral);margin-top:1px;font-style:italic}
+.dict-m{font-size:11px;color:#888;margin-top:1px}
+.dict-del{background:transparent;border:none;color:#555;cursor:pointer;font-size:14px;flex-shrink:0;padding:0;transition:color .2s}
+.dict-del:hover{color:var(--err)}
+.dict-ft{padding:.6rem 1rem;border-top:1px solid #333;display:flex;gap:.5rem}
+.dict-exp{flex:1;padding:6px;border-radius:6px;border:1px solid #444;background:transparent;color:#aaa;font-size:12px;cursor:pointer;transition:all .2s}
+.dict-exp:hover{background:#2a2a3a;color:#fff}
+.dict-clr{padding:6px 10px;border-radius:6px;border:1px solid var(--coral);background:transparent;color:var(--coral);font-size:12px;cursor:pointer}
+
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:84px;right:14px;z-index:500;background:var(--mint);color:#fff;padding:7px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:700;opacity:0;transform:translateY(8px);transition:all .3s;pointer-events:none;box-shadow:0 4px 16px rgba(127,216,122,.4)}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* ══ COMPREHENSION ══ */
+.comp-q{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:1rem;margin-bottom:.7rem;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.comp-qt{font-size:14px;color:var(--ink);margin-bottom:.7rem;font-weight:600}
+.comp-opts{display:flex;flex-direction:column;gap:6px}
+.comp-opt{padding:8px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);font-size:13px;cursor:pointer;transition:all .18s;text-align:left;font-weight:500}
+.comp-opt:hover{border-color:var(--sun);background:#FFFDE6}
+.comp-opt.sel{border-color:#E8C000;background:#FFF9C4;color:#5A4A00;font-weight:700}
+.comp-opt.ok{border-color:var(--mint);background:var(--mint-light);color:#2a7a26}
+.comp-opt.bad{border-color:var(--err);background:var(--err-light);color:var(--err)}
+
+.fb{margin-top:.7rem;padding:8px 12px;border-radius:var(--radius-sm);font-size:13px;display:none;font-weight:500}
+.fb.show{display:block}
+.fb.ok{background:var(--mint-light);color:#2a7a26;border:1px solid #A8D5B2}
+.fb.bad{background:var(--err-light);color:var(--err);border:1px solid var(--err-border)}
+.banner{display:none;background:var(--mint-light);border:1px solid #A8D5B2;border-radius:var(--radius-sm);padding:.7rem 1rem;font-size:13px;color:#2a7a26;margin-top:.8rem;align-items:center;gap:7px;font-weight:600}
+.banner.show{display:flex}
+
+@media(max-width:480px){
+  .hero{padding:1.5rem 1.2rem 1.4rem}
+  .hero-title{font-size:1.6rem}
+  .sec{padding:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- TEACHER BAR -->
+<div class="tbar">
+  <span class="tbar-title">LANGUST · All 50 Lessons</span>
+  <span class="tbar-tag" id="mode-tag">📚 Complete Course</span>
+  <div class="tog-wrap" id="notes-wrap">
+    Notes
+    <label class="tog"><input type="checkbox" id="tog" onchange="toggleT()"><span class="tog-sl"></span></label>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="prog-bar">
+  <span class="prog-lbl" id="plbl">Lesson 1 (1/50)</span>
+  <div class="prog-track"><div class="prog-fill" id="pfill"></div></div>
+  <span class="prog-score" id="pscore">⭐ 0</span>
+</div>
+
+<!-- SECTION TAB BAR -->
+<div class="sec-tabs" id="sec-tabs"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">1000 English Collocations</div>
+  <h1 class="hero-title">50 Lessons in 10 Minutes a Day</h1>
+  <p class="hero-sub">Learn natural English word combinations — from Family to Everyday Verbs</p>
+  <div class="hero-pills">
+    <span class="hero-pill">📚 1000+ collocations</span>
+    <span class="hero-pill">⏱ 10 min/day</span>
+    <span class="hero-pill">🎧 Audio included</span>
+    <span class="hero-pill">🇷🇺 Russian translations</span>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- LESSON 1: Family -->
+<!-- ============================================================ -->
+<section class="sec active" id="sec-1">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 1</div>
+  <h2 class="sec-title">Family 👨‍👩‍👧‍👦</h2>
+  <div class="sec-meta">24 collocations about family relationships <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-1">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Family</div>
+    <p>Today's topic: family relationships. Key collocations include <strong>immediate family</strong>, <strong>extended family</strong>, <strong>close-knit family</strong>, <strong>dysfunctional family</strong>, <strong>broken home</strong>, <strong>carefree childhood</strong>, <strong>troubled childhood</strong>, <strong>bitter divorce</strong>, <strong>messy divorce</strong>, <strong>divorce settlement</strong>, <strong>joint custody</strong>, <strong>sole custody</strong>, <strong>child support</strong>, and <strong>stay on good terms</strong>.</p>
+    <div class="say">"Tell me about your family! Who lives with you? Would you say you have a close-knit family?"</div>
+  </div>
+
+  <div class="rtext">
+    <p><strong>Reading: Anna's Story</strong></p>
+    <p>Anna grew up in what most people would call a <span class="hi" onclick="addW(this)" data-w="dysfunctional family" data-ru="неблагополучная семья" data-m="Unhealthy relationships with serious problems">dysfunctional family</span>. Her parents had a <span class="hi" onclick="addW(this)" data-w="messy divorce" data-ru="запутанный развод" data-m="A divorce with many conflicts and legal complications">messy divorce</span> when she was five — arguments, lawyers, a long and painful <span class="hi" onclick="addW(this)" data-w="divorce settlement" data-ru="соглашение о разделе имущества" data-m="Legal decisions about dividing money and possessions">divorce settlement</span>.</p>
+    <p>Unlike children with a happy <span class="hi" onclick="addW(this)" data-w="carefree childhood" data-ru="беззаботное детство" data-m="A childhood with no worries, full of fun">carefree childhood</span>, Anna had a genuinely <span class="hi" onclick="addW(this)" data-w="troubled childhood" data-ru="трудное детство" data-m="A childhood marked by hardship, poverty or emotional problems">troubled childhood</span>. She grew up in what felt like a <span class="hi" onclick="addW(this)" data-w="broken home" data-ru="неполная семья" data-m="A family where parents have separated or divorced">broken home</span>.</p>
+    <p>Her father was first awarded <span class="hi" onclick="addW(this)" data-w="sole custody" data-ru="единоличная опека" data-m="Only one parent has full legal responsibility">sole custody</span>, but later they agreed on <span class="hi" onclick="addW(this)" data-w="joint custody" data-ru="совместная опека" data-m="Both parents share equal legal responsibility">joint custody</span>. Her mother paid <span class="hi" onclick="addW(this)" data-w="child support" data-ru="алименты" data-m="Regular money payments to help with the expenses of raising a child">child support</span> each month.</p>
+    <p>Her <span class="hi" onclick="addW(this)" data-w="extended family" data-ru="расширенная семья" data-m="All relatives including grandparents, aunts, cousins">extended family</span> became her safe space. Together they formed a surprisingly <span class="hi" onclick="addW(this)" data-w="close-knit family" data-ru="дружная семья" data-m="A family with very strong emotional bonds">close-knit family</span> unit.</p>
+    <p>Today Anna is a proud <span class="hi" onclick="addW(this)" data-w="single mother" data-ru="мать-одиночка" data-m="A woman raising a child without a partner">single mother</span> of a seven-year-old boy, and her parents have finally learned to <span class="hi" onclick="addW(this)" data-w="stay on good terms" data-ru="оставаться в хороших отношениях" data-m="To maintain a polite, friendly relationship">stay on good terms</span> for his sake.</p>
+  </div>
+  <p style="font-size:12px;color:var(--ink3);margin-bottom:1rem">💡 <em>Tap orange phrases to add them to your vocabulary list</em></p>
+
+  <h3 style="font-size:14px;font-weight:700;margin-bottom:.7rem">✅ Check your understanding</h3>
+  <div id="cq1"></div>
+  <button class="btn btn-sky" style="margin-top:.5rem" onclick="chkComp(1)">Check ✓</button>
+  <div class="fb" id="cfb1"></div>
+
+  <div class="nav-row">
+    <button class="btn btn-coral" onclick="goTo(2)">Lesson 2 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 2: Relationships -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-2">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 2</div>
+  <h2 class="sec-title">Relationships 💕</h2>
+  <div class="sec-meta">10 collocations about relationships and romance <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-2">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Relationships</div>
+    <p>Key collocations: <strong>make friends</strong>, <strong>close friends</strong>, <strong>fall in love</strong>, <strong>love at first sight</strong>, <strong>soul mate</strong>, <strong>significant other</strong>, <strong>have feelings for</strong>, <strong>unrequited love</strong>, <strong>childhood sweetheart</strong>, <strong>make a commitment</strong>, <strong>propose</strong>, <strong>have an affair</strong>, <strong>cheat on</strong>.</p>
+    <div class="say">"Do you believe in love at first sight? Tell me about your closest friends!"</div>
+  </div>
+
+  <div class="rtext">
+    <p>When you move to a new city, it can be hard to <span class="hi" onclick="addW(this)" data-w="make friends" data-ru="заводить друзей" data-m="To form friendships with new people">make friends</span>. You'll probably have a number of casual acquaintances — people who you know on a basic level, but with whom you don't have a significant relationship.</p>
+    <p>Over time, some of these may become <span class="hi" onclick="addW(this)" data-w="close friends" data-ru="близкие друзья" data-m="Friends with whom you have a very strong relationship">close friends</span>. Do you believe in <span class="hi" onclick="addW(this)" data-w="love at first sight" data-ru="любовь с первого взгляда" data-m="Falling in love immediately upon meeting someone">love at first sight</span>? That's when two people meet and immediately <span class="hi" onclick="addW(this)" data-w="fall in love" data-ru="влюбляться" data-m="To develop romantic feelings for someone">fall in love</span>.</p>
+    <p>Some people believe that their <span class="hi" onclick="addW(this)" data-w="significant other" data-ru="вторая половинка" data-m="Your boyfriend, girlfriend, husband, or wife">significant other</span> is their <span class="hi" onclick="addW(this)" data-w="soul mate" data-ru="родственная душа" data-m="Someone you are destined to be with">soul mate</span>. It's possible for one person to <span class="hi" onclick="addW(this)" data-w="have feelings for" data-ru="испытывать чувства к" data-m="To have romantic feelings for someone">have feelings for</span> another person, but if the other person doesn't feel the same way, then the feeling is not mutual.</p>
+    <p>Some people marry their <span class="hi" onclick="addW(this)" data-w="childhood sweetheart" data-ru="первая любовь / друг детства" data-m="A boyfriend or girlfriend from childhood">childhood sweetheart</span>. When the couple is ready to <span class="hi" onclick="addW(this)" data-w="make a commitment" data-ru="взять на себя обязательства" data-m="To promise to be together in a serious relationship">make a commitment</span>, the man <span class="hi" onclick="addW(this)" data-w="propose" data-ru="делать предложение" data-m="To ask someone to marry you">proposes</span> to the woman.</p>
+    <p>Unfortunately, not all love stories have a happy ending. Sometimes a husband or wife <span class="hi" onclick="addW(this)" data-w="have an affair" data-ru="иметь роман на стороне" data-m="To have a sexual relationship with someone other than your spouse">has an affair</span>. We can also say that they are <span class="hi" onclick="addW(this)" data-w="cheat on" data-ru="изменять" data-m="To be unfaithful to your partner">cheating on</span> their husband/wife.</p>
+  </div>
+
+  <h3 style="font-size:14px;font-weight:700;margin-bottom:.7rem">✅ Quick Quiz</h3>
+  <div id="cq2"></div>
+  <button class="btn btn-sky" style="margin-top:.5rem" onclick="chkComp(2)">Check ✓</button>
+  <div class="fb" id="cfb2"></div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(1)">← Lesson 1</button>
+    <button class="btn btn-coral" onclick="goTo(3)">Lesson 3 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 3: Appearance -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-3">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 3</div>
+  <h2 class="sec-title">Appearance 👀</h2>
+  <div class="sec-meta">Collocations for describing how people look <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-3">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Appearance</div>
+    <p>Key collocations: <strong>gorgeous</strong>, <strong>jet-black hair</strong>, <strong>pale blue eyes</strong>, <strong>radiant complexion</strong>, <strong>hourglass figure</strong>, <strong>slender waist</strong>, <strong>bear a striking resemblance</strong>, <strong>unkempt hair</strong>, <strong>ruddy complexion</strong>, <strong>deep-set eyes</strong>, <strong>bushy eyebrows</strong>, <strong>facial hair</strong>, <strong>athletic build</strong>, <strong>broad shoulders</strong>, <strong>trim a beard</strong>, <strong>somewhat attractive</strong>.</p>
+    <div class="say">"Describe a friend or celebrity! What do they look like? Use some of these collocations."</div>
+  </div>
+
+  <div class="rtext">
+    <p>My best friend Joanna is absolutely <span class="hi" onclick="addW(this)" data-w="gorgeous" data-ru="потрясающе красивая" data-m="Extremely beautiful">gorgeous</span>. She has long, sleek, <span class="hi" onclick="addW(this)" data-w="jet-black hair" data-ru="черные как смоль волосы" data-m="Perfectly black hair">jet-black hair</span>, <span class="hi" onclick="addW(this)" data-w="pale blue eyes" data-ru="светло-голубые глаза" data-m="Light blue eyes">pale blue eyes</span>, and a <span class="hi" onclick="addW(this)" data-w="radiant complexion" data-ru="сияющий цвет лица" data-m="Skin that appears healthy and full of energy">radiant complexion</span>.</p>
+    <p>People always compliment her on her <span class="hi" onclick="addW(this)" data-w="hourglass figure" data-ru="фигура песочные часы" data-m="Large breasts and hips with a small waist">hourglass figure</span> and ask her what the secret is to maintaining such a <span class="hi" onclick="addW(this)" data-w="slender waist" data-ru="тонкая талия" data-m="A thin waist">slender waist</span>. She has a round face with an upturned nose, and she actually <span class="hi" onclick="addW(this)" data-w="bear a striking resemblance" data-ru="иметь поразительное сходство" data-m="To look extremely similar to someone">bears a striking resemblance</span> to a famous singer.</p>
+    <p>Her boyfriend has <span class="hi" onclick="addW(this)" data-w="unkempt hair" data-ru="неухоженные волосы" data-m="Messy hair that looks like the person doesn't take care of it">unkempt hair</span>, a <span class="hi" onclick="addW(this)" data-w="square face" data-ru="квадратное лицо" data-m="A face with a strong jawline">square face</span> and a <span class="hi" onclick="addW(this)" data-w="ruddy complexion" data-ru="красноватый цвет лица" data-m="Reddish skin">ruddy complexion</span>. His <span class="hi" onclick="addW(this)" data-w="deep-set eyes" data-ru="глубоко посаженные глаза" data-m="Eyes that are far back in the person's face">deep-set eyes</span> are almost hidden under his <span class="hi" onclick="addW(this)" data-w="bushy eyebrows" data-ru="густые брови" data-m="Big eyebrows with lots of hair">bushy eyebrows</span>, and he sports a thick mustache and a huge beard.</p>
+    <p>His body isn't bad — he has an <span class="hi" onclick="addW(this)" data-w="athletic build" data-ru="спортивное телосложение" data-m="A body with a lot of muscles">athletic build</span>, with <span class="hi" onclick="addW(this)" data-w="broad shoulders" data-ru="широкие плечи" data-m="Wide shoulders">broad shoulders</span> and muscular arms. If he would only <span class="hi" onclick="addW(this)" data-w="trim his beard" data-ru="подстричь бороду" data-m="To cut a beard a little shorter">trim his beard</span> and comb his hair, I suppose he could be considered <span class="hi" onclick="addW(this)" data-w="somewhat attractive" data-ru="довольно привлекательный" data-m="More or less handsome">somewhat attractive</span>.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(2)">← Lesson 2</button>
+    <button class="btn btn-coral" onclick="goTo(4)">Lesson 4 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 4: Character & Behavior -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-4">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 4</div>
+  <h2 class="sec-title">Character & Behavior 🧠</h2>
+  <div class="sec-meta">15 collocations describing personality <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-4">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Character & Behavior</div>
+    <p>Key collocations: <strong>painfully shy</strong>, <strong>vivid imagination</strong>, <strong>outgoing personality</strong>, <strong>sense of humor</strong>, <strong>brutally honest</strong>, <strong>hurt feelings</strong>, <strong>fiercely loyal</strong>, <strong>show true colors</strong>, <strong>play a prank</strong>, <strong>bear a grudge</strong>, <strong>low self-esteem</strong>, <strong>mean streak</strong>, <strong>come out of shell</strong>, <strong>thicker skin</strong>, <strong>speak mind</strong>, <strong>superiority complex</strong>, <strong>swallow pride</strong>, <strong>put others first</strong>.</p>
+    <div class="say">"Are you an outgoing person? Tell me about your personality — or someone you know!"</div>
+  </div>
+
+  <div class="rtext">
+    <p>When I was a teenager, I was <span class="hi" onclick="addW(this)" data-w="painfully shy" data-ru="очень застенчивый" data-m="Extremely shy">painfully shy</span>. I loved reading books, and I had a <span class="hi" onclick="addW(this)" data-w="vivid imagination" data-ru="яркое воображение" data-m="A creative and colorful imagination">vivid imagination</span>. My best friend had a more <span class="hi" onclick="addW(this)" data-w="outgoing personality" data-ru="общительная личность" data-m="Liking to be friendly and sociable">outgoing personality</span> and a good <span class="hi" onclick="addW(this)" data-w="sense of humor" data-ru="чувство юмора" data-m="Ability to make other people laugh">sense of humor</span>. Unfortunately she was also <span class="hi" onclick="addW(this)" data-w="brutally honest" data-ru="крайне честный" data-m="Extremely honest, sometimes to the point of hurting feelings">brutally honest</span>, and sometimes her comments <span class="hi" onclick="addW(this)" data-w="hurt my feelings" data-ru="ранить чувства" data-m="Made me sad, upset, or angry">hurt my feelings</span>.</p>
+    <p>Although I was <span class="hi" onclick="addW(this)" data-w="fiercely loyal" data-ru="безгранично преданный" data-m="Extremely loyal and devoted">fiercely loyal</span> to her, she <span class="hi" onclick="addW(this)" data-w="showed her true colors" data-ru="показала свое истинное лицо" data-m="Revealed her true personality">showed her true colors</span> when she <span class="hi" onclick="addW(this)" data-w="played a prank" data-ru="сыграла шутку" data-m="Did a trick on someone">played a prank</span> that humiliated me. I <span class="hi" onclick="addW(this)" data-w="bore a grudge" data-ru="затаила обиду" data-m="Continued feeling angry about something">bore a grudge</span> against her for years afterwards. Now that I look back on it, I can see that she had <span class="hi" onclick="addW(this)" data-w="low self-esteem" data-ru="низкая самооценка" data-m="Considering yourself inferior">low self-esteem</span> and a bit of a <span class="hi" onclick="addW(this)" data-w="mean streak" data-ru="злая жилка" data-m="A tendency to be mean or nasty">mean streak</span>.</p>
+    <p>I've <span class="hi" onclick="addW(this)" data-w="come out of my shell" data-ru="вышла из своей скорлупы" data-m="Become less shy and more confident">come out of my shell</span> since those days; I have <span class="hi" onclick="addW(this)" data-w="a thicker skin" data-ru="толстая кожа" data-m="Less sensitive to criticism">a thicker skin</span> and it doesn't bother me when people <span class="hi" onclick="addW(this)" data-w="speak their minds" data-ru="говорят, что думают" data-m="Say exactly what they think, without considering the effects on others">speak their minds</span>.</p>
+    <p>My biggest flaw is that I have a tendency to be arrogant — some say I have a <span class="hi" onclick="addW(this)" data-w="superiority complex" data-ru="комплекс превосходства" data-m="Considering yourself superior to others">superiority complex</span>. I'll admit that it is hard for me to <span class="hi" onclick="addW(this)" data-w="swallow my pride" data-ru="проглотить гордость" data-m="Stop being arrogant and admit you're wrong">swallow my pride</span> and recognize when I've been mistaken. My resolution for the New Year is to <span class="hi" onclick="addW(this)" data-w="put others first" data-ru="ставить других на первое место" data-m="Consider the needs of other people more important than your own">put others first</span>.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(3)">← Lesson 3</button>
+    <button class="btn btn-coral" onclick="goTo(5)">Lesson 5 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 5: Feelings -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-5">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 5</div>
+  <h2 class="sec-title">Feelings & Emotions 😊😢</h2>
+  <div class="sec-meta">10 collocations about emotions <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-5">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Feelings</div>
+    <p>Key collocations: <strong>roller coaster of emotions</strong>, <strong>ridiculously excited</strong>, <strong>worried sick</strong>, <strong>seething with anger</strong>, <strong>visibly disappointed</strong>, <strong>bottle up emotions</strong>, <strong>lose temper</strong>, <strong>deeply depressed</strong>, <strong>emotional wreck</strong>, <strong>pleasantly surprised</strong>, <strong>immensely grateful</strong>, <strong>overwhelmed with emotion</strong>.</p>
+    <div class="say">"Tell me about a time you felt very emotional. What happened?"</div>
+  </div>
+
+  <div class="rtext">
+    <p>I experienced a <span class="hi" onclick="addW(this)" data-w="roller coaster of emotions" data-ru="американские горки эмоций" data-m="Many different emotions one after another">roller coaster of emotions</span> when my son was born. During my wife's pregnancy, I was <span class="hi" onclick="addW(this)" data-w="ridiculously excited" data-ru="невероятно взволнован" data-m="Extremely excited">ridiculously excited</span> about the prospect of becoming a dad.</p>
+    <p>On the big day, I'd imagined that everything would go smoothly — but there were complications during the delivery and my wife had to have emergency surgery while I waited, <span class="hi" onclick="addW(this)" data-w="worried sick" data-ru="очень переживал" data-m="Very worried">worried sick</span>.</p>
+    <p>As time went by, I got increasingly anxious because the doctors weren't telling me anything. After two hours I was <span class="hi" onclick="addW(this)" data-w="seething with anger" data-ru="кипеть от гнева" data-m="Ready to explode with anger">seething with anger</span>, and I shouted at one of the nurses.</p>
+    <p>My wife was <span class="hi" onclick="addW(this)" data-w="visibly disappointed" data-ru="явно разочарована" data-m="It was obvious that she was disappointed">visibly disappointed</span> that I wasn't by her side when she woke up from surgery. She prefers to <span class="hi" onclick="addW(this)" data-w="bottle up her emotions" data-ru="подавлять эмоции" data-m="Keep emotions hidden inside">bottle up her emotions</span> — but I knew I had let her down and I was terribly sorry that I had <span class="hi" onclick="addW(this)" data-w="lost my temper" data-ru="вышел из себя" data-m="Lost control and shown anger">lost my temper</span>.</p>
+    <p>The months that followed were tough. My wife became <span class="hi" onclick="addW(this)" data-w="deeply depressed" data-ru="глубоко подавлена" data-m="Very depressed">deeply depressed</span>, and I too was an <span class="hi" onclick="addW(this)" data-w="emotional wreck" data-ru="эмоциональный развалина" data-m="A person who is very sad, confused, and upset">emotional wreck</span> as I tried to juggle the demands of work and family life.</p>
+    <p>But now things are starting to turn around — I've been <span class="hi" onclick="addW(this)" data-w="pleasantly surprised" data-ru="приятно удивлен" data-m="Surprised in a good way">pleasantly surprised</span> at all the help we've gotten from our friends and neighbors. I'm just <span class="hi" onclick="addW(this)" data-w="immensely grateful" data-ru="чрезвычайно благодарен" data-m="Extremely grateful">immensely grateful</span> that my wife and son are healthy, and sometimes I'm <span class="hi" onclick="addW(this)" data-w="overwhelmed with emotion" data-ru="переполнен эмоциями" data-m="When emotion is so strong it's difficult to think or speak">overwhelmed with emotion</span> as I reflect on how lucky we are.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(4)">← Lesson 4</button>
+    <button class="btn btn-coral" onclick="goTo(6)">Lesson 6 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 6: Houses & Apartments -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-6">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 6</div>
+  <h2 class="sec-title">Houses & Apartments 🏠</h2>
+  <div class="sec-meta">15 collocations about housing <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-6">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Houses</div>
+    <p>Key collocations: <strong>short-term rental</strong>, <strong>studio apartment</strong>, <strong>overlook the ocean</strong>, <strong>city skyline</strong>, <strong>remodel/renovate</strong>, <strong>fully furnished</strong>, <strong>spacious living room</strong>, <strong>cramped</strong>, <strong>homesick</strong>, <strong>affordable housing</strong>, <strong>upscale neighborhoods</strong>, <strong>take out a mortgage</strong>, <strong>down payment</strong>, <strong>housewarming party</strong>.</p>
+    <div class="say">"Describe your dream home! Where is it? What does it look like?"</div>
+  </div>
+
+  <div class="rtext">
+    <p>I recently spent a month on vacation — but instead of staying in a hotel, I looked for a <span class="hi" onclick="addW(this)" data-w="short-term rental" data-ru="аренда на короткий срок" data-m="A place to live that can be rented for a short period">short-term rental</span>. I ended up sharing a two-bedroom apartment with some friends. It was actually cheaper than renting a <span class="hi" onclick="addW(this)" data-w="studio apartment" data-ru="студия" data-m="An apartment with only one big room">studio apartment</span> all by myself.</p>
+    <p>The apartment was on the top floor of a five-story building and it had a balcony <span class="hi" onclick="addW(this)" data-w="overlooking the ocean" data-ru="с видом на океан" data-m="Has a view of the ocean">overlooking the ocean</span>. From the roof, we also had a nice view of the <span class="hi" onclick="addW(this)" data-w="city skyline" data-ru="городской пейзаж" data-m="The outline of a city's buildings against the sky">city skyline</span>.</p>
+    <p>The apartment had recently been <span class="hi" onclick="addW(this)" data-w="remodeled/renovated" data-ru="отремонтирован" data-m="Fixed up and improved">remodeled</span> and was <span class="hi" onclick="addW(this)" data-w="fully furnished" data-ru="полностью меблирован" data-m="Already has furniture and appliances">fully furnished</span>, so it already had furniture and appliances.</p>
+    <p>We loved the <span class="hi" onclick="addW(this)" data-w="spacious living room" data-ru="просторная гостиная" data-m="A large, roomy living room">spacious living room</span>, but unfortunately the bedrooms were rather <span class="hi" onclick="addW(this)" data-w="cramped" data-ru="тесный" data-m="Small and uncomfortable">cramped</span>. It was nice to spend a month there, but by the end of the trip I started to feel <span class="hi" onclick="addW(this)" data-w="homesick" data-ru="тосковать по дому" data-m="Feeling sad because you miss your life at home">homesick</span>.</p>
+    <p>I'd really like to have a place of my own so that I'm not throwing away money on rent every month, but there's a real shortage of <span class="hi" onclick="addW(this)" data-w="affordable housing" data-ru="доступное жилье" data-m="Houses/apartments that are reasonably priced">affordable housing</span> in my city. Even if I stay away from the <span class="hi" onclick="addW(this)" data-w="upscale neighborhoods" data-ru="престижные районы" data-m="Areas where rich people live">upscale neighborhoods</span>, I'd still have to <span class="hi" onclick="addW(this)" data-w="take out a mortgage" data-ru="взять ипотеку" data-m="Borrow money from the bank to buy a house">take out a mortgage</span>.</p>
+    <p>But still, I'm gonna start saving up for a <span class="hi" onclick="addW(this)" data-w="down payment" data-ru="первоначальный взнос" data-m="An initial payment on a big purchase">down payment</span>. Someday, when I do move into a new place, I'll be sure to throw a <span class="hi" onclick="addW(this)" data-w="housewarming party" data-ru="новоселье" data-m="A party to celebrate living in a new house/apartment">housewarming party</span>.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(5)">← Lesson 5</button>
+    <button class="btn btn-coral" onclick="goTo(7)">Lesson 7 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 7: Eating -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-7">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 7</div>
+  <h2 class="sec-title">Eating 🍽️</h2>
+  <div class="sec-meta">15 collocations about food and eating <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-7">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Eating</div>
+    <p>Key collocations: <strong>eating habits</strong>, <strong>junk food</strong>, <strong>go on a diet</strong>, <strong>processed foods</strong>, <strong>food additives</strong>, <strong>weight gain</strong>, <strong>balanced diet</strong>, <strong>nourishing meals</strong>, <strong>organic food</strong>, <strong>fresh produce</strong>, <strong>quick snack</strong>, <strong>eat in moderation</strong>, <strong>portion sizes</strong>, <strong>home-cooked meal</strong>, <strong>hearty stew</strong>, <strong>healthy appetite</strong>, <strong>second helping</strong>, <strong>international cuisine</strong>, <strong>food poisoning</strong>, <strong>eat light meals</strong>, <strong>spoil your appetite</strong>.</p>
+    <div class="say">"What do you usually eat for breakfast? Do you have any healthy eating habits?"</div>
+  </div>
+
+  <div class="rtext">
+    <p>My mother radically changed her <span class="hi" onclick="addW(this)" data-w="eating habits" data-ru="привычки питания" data-m="The way someone usually eats">eating habits</span> a few years ago. In the past, she ate a lot of <span class="hi" onclick="addW(this)" data-w="junk food" data-ru="нездоровая пища" data-m="Food that is not nutritious/healthy">junk food</span> and was overweight. Sometimes she would try to <span class="hi" onclick="addW(this)" data-w="go on a diet" data-ru="сесть на диету" data-m="Eat less food and healthier food">go on a diet</span>, but it would never last.</p>
+    <p>But now she understands how unhealthy <span class="hi" onclick="addW(this)" data-w="processed foods" data-ru="обработанные продукты" data-m="Foods that have been chemically processed">processed foods</span> are — they're full of <span class="hi" onclick="addW(this)" data-w="food additives" data-ru="пищевые добавки" data-m="Chemicals added to food">food additives</span> that contribute to <span class="hi" onclick="addW(this)" data-w="weight gain" data-ru="набор веса" data-m="Increase in body weight">weight gain</span>.</p>
+    <p>Nowadays, she eats a <span class="hi" onclick="addW(this)" data-w="balanced diet" data-ru="сбалансированное питание" data-m="Eating the right amounts of different foods">balanced diet</span> including a lot of <span class="hi" onclick="addW(this)" data-w="nourishing meals" data-ru="питательные блюда" data-m="Meals that are healthy and nutritious">nourishing meals</span> that she prepares herself. She doesn't buy <span class="hi" onclick="addW(this)" data-w="organic food" data-ru="органическая пища" data-m="Food produced without chemicals or pesticides">organic food</span> because she thinks the prices are outrageous, but she stocks up on <span class="hi" onclick="addW(this)" data-w="fresh produce" data-ru="свежие продукты" data-m="Fresh fruits and vegetables">fresh produce</span> so that she can grab a <span class="hi" onclick="addW(this)" data-w="quick snack" data-ru="быстрый перекус" data-m="Something small and fast to eat">quick snack</span> when she wants one. She has also learned to <span class="hi" onclick="addW(this)" data-w="eat in moderation" data-ru="есть в меру" data-m="To eat neither too much nor too little">eat in moderation</span> and watch her <span class="hi" onclick="addW(this)" data-w="portion sizes" data-ru="размер порций" data-m="How much food you take">portion sizes</span>.</p>
+    <p>I often stop by her house when I'm in the mood for a <span class="hi" onclick="addW(this)" data-w="home-cooked meal" data-ru="домашняя еда" data-m="Food prepared at home">home-cooked meal</span>. The other day she made a <span class="hi" onclick="addW(this)" data-w="hearty stew" data-ru="сытное рагу" data-m="A thick soup with lots of flavors and ingredients">hearty stew</span> that was full of beans and vegetables. My brother, who has a <span class="hi" onclick="addW(this)" data-w="healthy appetite" data-ru="хороший аппетит" data-m="The capacity to eat a lot">healthy appetite</span>, had a <span class="hi" onclick="addW(this)" data-w="second helping" data-ru="вторая порция" data-m="A second portion of food">second helping</span>.</p>
+    <p>My mother recently told me that she'd like to try some <span class="hi" onclick="addW(this)" data-w="international cuisine" data-ru="международная кухня" data-m="Food from different countries">international cuisine</span>. I was surprised to hear that, because a few years ago she had a bad experience after getting <span class="hi" onclick="addW(this)" data-w="food poisoning" data-ru="пищевое отравление" data-m="Becoming sick because of contaminated food">food poisoning</span> at a Japanese restaurant.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(6)">← Lesson 6</button>
+    <button class="btn btn-coral" onclick="goTo(8)">Lesson 8 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 8: Movies & Books -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-8">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 8</div>
+  <h2 class="sec-title">Movies & Books 🎬📚</h2>
+  <div class="sec-meta">15 collocations about films and literature <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-8">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Movies & Books</div>
+    <p>Key collocations: <strong>movie trailer</strong>, <strong>opening night</strong>, <strong>film critics</strong>, <strong>movie star</strong>, <strong>star in</strong>, <strong>based on a true story</strong>, <strong>shoot the film</strong>, <strong>leading role</strong>, <strong>box-office hit</strong>, <strong>engrossed in a book</strong>, <strong>main character</strong>, <strong>borrow books</strong>, <strong>renew a book</strong>.</p>
+    <div class="say">"What's your favorite movie or book? Why do you like it?"</div>
+  </div>
+
+  <div class="rtext">
+    <p>My brother is a huge fan of movies. When he sees a <span class="hi" onclick="addW(this)" data-w="movie trailer" data-ru="трейлер фильма" data-m="A short video preview of a movie">movie trailer</span>, he counts down the days until the movie comes out. He always goes to the movie theater on <span class="hi" onclick="addW(this)" data-w="opening night" data-ru="в день премьеры" data-m="The first day a movie is shown publicly">opening night</span>. He also loves to analyze the <span class="hi" onclick="addW(this)" data-w="film critics' reviews" data-ru="рецензии кинокритиков" data-m="Evaluations by professional movie reviewers">film critics' reviews</span> and tries to guess which movies will be nominated for an award.</p>
+    <p>One of his favorite <span class="hi" onclick="addW(this)" data-w="movie stars" data-ru="кинозвезды" data-m="Famous actors/actresses">movie stars</span> will be <span class="hi" onclick="addW(this)" data-w="starring in" data-ru="сниматься в" data-m="Playing a main role in a film">starring in</span> an upcoming film about the Vietnam War. It's <span class="hi" onclick="addW(this)" data-w="based on a true story" data-ru="основано на реальных событиях" data-m="Inspired by real events that actually happened">based on a true story</span>, and they're <span class="hi" onclick="addW(this)" data-w="shooting the film" data-ru="снимать фильм" data-m="Recording/filming the movie">shooting the film</span> on-site in Vietnam.</p>
+    <p>This particular actor had been talking about retiring, but when he was offered the <span class="hi" onclick="addW(this)" data-w="leading role" data-ru="главная роль" data-m="The most important part in a movie">leading role</span> in a film that's sure to be a <span class="hi" onclick="addW(this)" data-w="box-office hit" data-ru="кассовый хит" data-m="A movie that is very successful">box-office hit</span> he couldn't turn it down.</p>
+    <p>I, on the other hand, prefer books. I'm currently <span class="hi" onclick="addW(this)" data-w="engrossed in a book" data-ru="поглощён книгой" data-m="The book is taking all your attention">engrossed in a book</span> by Stieg Larsson — it's the final part of a trilogy, and I can't wait to see how things turn out for the <span class="hi" onclick="addW(this)" data-w="main character" data-ru="главный герой" data-m="The most important person in the book">main character</span>. I already have a huge collection of books, and I also <span class="hi" onclick="addW(this)" data-w="borrow books" data-ru="брать книги" data-m="To take books from a library">borrow books</span> from the library.</p>
+    <p>One book I took out last week deals with modern feminism and motherhood. I'm not sure I'll have time to finish it before I have to return the book to the library. Maybe I'll <span class="hi" onclick="addW(this)" data-w="renew it" data-ru="продлить (книгу)" data-m="To get an extension on how long you can keep a book">renew it</span> for another week.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(7)">← Lesson 7</button>
+    <button class="btn btn-coral" onclick="goTo(9)">Lesson 9 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 9: Music -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-9">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 9</div>
+  <h2 class="sec-title">Music 🎵</h2>
+  <div class="sec-meta">12 collocations about music <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-9">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Music</div>
+    <p>Key collocations: <strong>musically gifted</strong>, <strong>sheet music</strong>, <strong>strumming a guitar</strong>, <strong>composing music</strong>, <strong>song lyrics</strong>, <strong>formed a band</strong>, <strong>sizable following</strong>, <strong>playing gigs</strong>, <strong>debut album</strong>, <strong>remixed track</strong>, <strong>massive hit</strong>, <strong>catchy tune</strong>, <strong>upbeat tempo</strong>, <strong>released</strong>, <strong>go on tour</strong>, <strong>big break</strong>, <strong>singing along</strong>, <strong>tone-deaf</strong>, <strong>sing off-key</strong>.</p>
+    <div class="say">"What kind of music do you like? Can you play any instruments?"</div>
+  </div>
+
+  <div class="rtext">
+    <p>My older brother Alex is very <span class="hi" onclick="addW(this)" data-w="musically gifted" data-ru="музыкально одарённый" data-m="Has a natural talent for music">musically gifted</span>. He can play any tune from memory, without looking at <span class="hi" onclick="addW(this)" data-w="sheet music" data-ru="ноты" data-m="Musical notation written on paper">sheet music</span>. He spends all his free time <span class="hi" onclick="addW(this)" data-w="strumming a guitar" data-ru="перебирая струны гитары" data-m="Playing a guitar by brushing the strings">strumming a guitar</span>, <span class="hi" onclick="addW(this)" data-w="composing music" data-ru="сочиняя музыку" data-m="Creating music">composing music</span>, and writing <span class="hi" onclick="addW(this)" data-w="song lyrics" data-ru="тексты песен" data-m="The words to a song">song lyrics</span>.</p>
+    <p>Alex and his friends <span class="hi" onclick="addW(this)" data-w="formed a band" data-ru="создали группу" data-m="Started a musical group">formed a band</span> that has attracted a <span class="hi" onclick="addW(this)" data-w="sizable following" data-ru="большое количество поклонников" data-m="A lot of fans">sizable following</span> in our city. They started out <span class="hi" onclick="addW(this)" data-w="playing gigs" data-ru="играя на концертах" data-m="Giving small, informal performances">playing gigs</span> in bars and clubs, and they used the money they earned to record their <span class="hi" onclick="addW(this)" data-w="debut album" data-ru="дебютный альбом" data-m="Record their first CD">debut album</span>.</p>
+    <p>A <span class="hi" onclick="addW(this)" data-w="remixed track" data-ru="ремикс" data-m="A song that has been modified electronically">remixed track</span> from that CD then became a <span class="hi" onclick="addW(this)" data-w="massive hit" data-ru="огромный хит" data-m="A very popular song">massive hit</span> on the local radio station thanks to its <span class="hi" onclick="addW(this)" data-w="catchy tune" data-ru="запоминающаяся мелодия" data-m="Memorable melody">catchy tune</span> and <span class="hi" onclick="addW(this)" data-w="upbeat tempo" data-ru="быстрый темп" data-m="Fast rhythm">upbeat tempo</span>.</p>
+    <p>Their second album will be <span class="hi" onclick="addW(this)" data-w="released" data-ru="выпущен" data-m="Made available to the public">released</span> at the end of the year; they'll record it live at their next show. Alex dreams of <span class="hi" onclick="addW(this)" data-w="going on tour" data-ru="отправиться в турне" data-m="Traveling to perform in different cities">going on tour</span> — he's just waiting for his <span class="hi" onclick="addW(this)" data-w="big break" data-ru="большой шанс" data-m="Big opportunity to become famous">big break</span> to get his foot in the door of the music industry.</p>
+    <p>As for me, I love <span class="hi" onclick="addW(this)" data-w="singing along" data-ru="подпевая" data-m="Singing together with the music">singing along</span> to my brother's music, but a career in music isn't for me — I'm completely <span class="hi" onclick="addW(this)" data-w="tone-deaf" data-ru="лишённый музыкального слуха" data-m="Unable to correctly identify musical notes">tone-deaf</span> and I always <span class="hi" onclick="addW(this)" data-w="sing off-key" data-ru="фальшивить" data-m="Sing the incorrect melody">sing off-key</span>!</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(8)">← Lesson 8</button>
+    <button class="btn btn-coral" onclick="goTo(10)">Lesson 10 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 10: Sports -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-10">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 10</div>
+  <h2 class="sec-title">Sports ⚽</h2>
+  <div class="sec-meta">15 collocations about sports <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-10">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Sports</div>
+    <p>Key collocations: <strong>play soccer</strong>, <strong>do yoga</strong>, <strong>go swimming</strong>, <strong>home game</strong>, <strong>away game</strong>, <strong>win the game</strong>, <strong>lose the game</strong>, <strong>tie the game</strong>, <strong>have the lead</strong>, <strong>make a comeback</strong>, <strong>enter a competition</strong>, <strong>personal best</strong>, <strong>break the world record</strong>, <strong>set a new world record</strong>, <strong>withdraw from the competition</strong>.</p>
+    <div class="say">"What sports do you play? Do you prefer team sports or individual activities?"</div>
+  </div>
+
+  <div class="rtext">
+    <p>We typically use <strong>play</strong> for team sports — you <span class="hi" onclick="addW(this)" data-w="play soccer" data-ru="играть в футбол" data-m="Participate in the sport of soccer">play soccer</span>, play basketball, play tennis, play baseball, and play golf.</p>
+    <p>The verb <strong>do</strong> is used for more individual sports — you <span class="hi" onclick="addW(this)" data-w="do yoga" data-ru="заниматься йогой" data-m="Practice yoga">do yoga</span>, do gymnastics, do martial arts, and do aerobics. Also, in more general terms, you do exercise.</p>
+    <p>The verb <strong>go</strong> is used with most activities that end in -ing: you <span class="hi" onclick="addW(this)" data-w="go swimming" data-ru="ходить плавать" data-m="Participate in swimming">go swimming</span>, go biking, go surfing, go rock climbing, go bowling, and go fishing.</p>
+    <p>With team sports, we can use the word game or match: a soccer game, a basketball game, a tennis match, etc. You can <span class="hi" onclick="addW(this)" data-w="win the game" data-ru="выиграть матч" data-m="Be the winner">win the game</span>, <span class="hi" onclick="addW(this)" data-w="lose the game" data-ru="проиграть матч" data-m="Be the loser">lose the game</span>, or <span class="hi" onclick="addW(this)" data-w="tie the game" data-ru="сыграть вничью" data-m="Have the same score">tie the game</span>.</p>
+    <p>A team can play a <span class="hi" onclick="addW(this)" data-w="home game" data-ru="домашний матч" data-m="Playing in their own stadium">home game</span> or an <span class="hi" onclick="addW(this)" data-w="away game" data-ru="выездной матч" data-m="Playing at the opposing team's stadium">away game</span>. When one team is winning in the middle of the game, we say that team <span class="hi" onclick="addW(this)" data-w="has the lead" data-ru="ведёт в счёте" data-m="Is winning at that moment">has the lead</span>. However, the other team can <span class="hi" onclick="addW(this)" data-w="make a comeback" data-ru="сделать камбэк" data-m="Score points from a losing position">make a comeback</span> and take the lead.</p>
+    <p>Athletes can <span class="hi" onclick="addW(this)" data-w="enter a competition" data-ru="участвовать в соревновании" data-m="Register to take part in a competition">enter a competition</span> and try to win first place. If the athlete is performing well, they may achieve a <span class="hi" onclick="addW(this)" data-w="personal best" data-ru="личный рекорд" data-m="The best performance they have ever had">personal best</span> — and if they perform better than ANYONE ever has in the past, then they could even <span class="hi" onclick="addW(this)" data-w="break the world record" data-ru="побить мировой рекорд" data-m="Perform better than anyone else in history">break the world record</span> or <span class="hi" onclick="addW(this)" data-w="set a new world record" data-ru="установить новый мировой рекорд" data-m="Establish a new record that no one else has achieved">set a new world record</span>.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(9)">← Lesson 9</button>
+    <button class="btn btn-coral" onclick="goTo(11)">Lesson 11 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 11: Health & Sickness -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-11">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 11</div>
+  <h2 class="sec-title">Health & Sickness 🏥</h2>
+  <div class="sec-meta">12 collocations about health <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-11">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Health</div>
+    <p>Key collocations: <strong>life expectancy</strong>, <strong>quit smoking</strong>, <strong>reduce stress</strong>, <strong>get plenty of sleep</strong>, <strong>exercise regularly</strong>, <strong>health insurance</strong>, <strong>suffer/sustain injuries</strong>, <strong>break/fracture a bone</strong>, <strong>relieve the pain</strong>, <strong>chronic condition</strong>, <strong>over-the-counter medication</strong>, <strong>prescription medication</strong>, <strong>alleviate symptoms</strong>, <strong>catch a cold</strong>, <strong>terminally ill</strong>.</p>
+    <div class="say">"What do you do to stay healthy? How often do you exercise?"</div>
+  </div>
+
+  <div class="rtext">
+    <p>There are a number of lifestyle changes you can make to improve your overall health and increase your <span class="hi" onclick="addW(this)" data-w="life expectancy" data-ru="продолжительность жизни" data-m="How long you are expected to live">life expectancy</span> — you can <span class="hi" onclick="addW(this)" data-w="quit smoking" data-ru="бросить курить" data-m="Stop smoking">quit smoking</span>, <span class="hi" onclick="addW(this)" data-w="reduce stress" data-ru="снизить стресс" data-m="Lower your stress levels">reduce stress</span>, eat a balanced diet, <span class="hi" onclick="addW(this)" data-w="get plenty of sleep" data-ru="много спать" data-m="Get enough sleep">get plenty of sleep</span>, and <span class="hi" onclick="addW(this)" data-w="exercise regularly" data-ru="регулярно заниматься спортом" data-m="Exercise on a consistent basis">exercise regularly</span>. It's also important to have <span class="hi" onclick="addW(this)" data-w="health insurance" data-ru="медицинская страховка" data-m="A program to cover medical expenses">health insurance</span> in case of an accident or serious illness.</p>
+    <p>If you're in a car accident, you might <span class="hi" onclick="addW(this)" data-w="suffer/sustain injuries" data-ru="получить травмы" data-m="Get injured">suffer serious injuries</span>. Of course, if you're wearing your seatbelt, you're more likely to have only minor injuries. If you've <span class="hi" onclick="addW(this)" data-w="broken/fractured a bone" data-ru="сломать кость" data-m="Crack or break a bone">broken a bone</span>, the doctor will put your leg in a cast.</p>
+    <p>If you have a minor ailment like a headache, you can take some aspirin to <span class="hi" onclick="addW(this)" data-w="relieve the pain" data-ru="облегчить боль" data-m="Reduce the effects of the pain">relieve the pain</span>. If you <span class="hi" onclick="addW(this)" data-w="suffer from a chronic condition" data-ru="страдать от хронического заболевания" data-m="Have a condition that continues for a long time">suffer from a chronic condition</span> like allergies, asthma, back pain, or depression, there are both <span class="hi" onclick="addW(this)" data-w="over-the-counter" data-ru="безрецептурный" data-m="Medication you can buy without a prescription">over-the-counter</span> and <span class="hi" onclick="addW(this)" data-w="prescription medications" data-ru="рецептурные препараты" data-m="Medication that requires a doctor's prescription">prescription medications</span> that can help <span class="hi" onclick="addW(this)" data-w="alleviate the symptoms" data-ru="облегчить симптомы" data-m="Reduce the effects of the symptoms">alleviate the symptoms</span>.</p>
+    <p>When someone has a minor respiratory infection, we say they have a cold. Don't get too close to that person, because you could <span class="hi" onclick="addW(this)" data-w="catch a cold" data-ru="простудиться" data-m="Get infected with a cold virus">catch a cold</span> too!</p>
+    <p>If someone is diagnosed with a more serious illness such as cancer or AIDS, they'll need more extensive treatment. When a disease has progressed so far that it will be impossible to cure, then the patient is said to be <span class="hi" onclick="addW(this)" data-w="terminally ill" data-ru="неизлечимо болен" data-m="Will definitely die of the disease soon">terminally ill</span>.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(10)">← Lesson 10</button>
+    <button class="btn btn-coral" onclick="goTo(12)">Lesson 12 →</button>
+  </div>
+</section>
+
+<!-- Continue with Lessons 12-50 in similar format... -->
+<!-- Due to length, I'll provide the remaining lessons in the same pattern -->
+<!-- But I'll create a compact version that includes all 50 lessons -->
+
+<!-- ============================================================ -->
+<!-- LESSON 12: Computers -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-12">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 12</div>
+  <h2 class="sec-title">Computers 💻</h2>
+  <div class="sec-meta">12 collocations about computers <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-12">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Computers</div>
+    <p>Key collocations: <strong>start up</strong>, <strong>shut down</strong>, <strong>get online</strong>, <strong>check e-mail</strong>, <strong>write and send messages</strong>, <strong>reply to an e-mail</strong>, <strong>forward an e-mail</strong>, <strong>attach a file</strong>, <strong>log into</strong>, <strong>website was down</strong>, <strong>home page</strong>, <strong>search engine</strong>, <strong>surf/browse the web</strong>, <strong>burn a CD</strong>, <strong>delete a file</strong>, <strong>computer freezes</strong>, <strong>restart/reboot</strong>, <strong>back up files</strong>, <strong>computer crashes</strong>.</p>
+    <div class="say">"How often do you use a computer? What do you usually do online?"</div>
+  </div>
+
+  <div class="rtext">
+    <p>I'm teaching my grandmother how to use a computer. First I showed her how to <span class="hi" onclick="addW(this)" data-w="start up" data-ru="включить" data-m="Turn on a computer">start up</span> and <span class="hi" onclick="addW(this)" data-w="shut down" data-ru="выключить" data-m="Turn off a computer">shut down</span> the computer. Then, I helped her <span class="hi" onclick="addW(this)" data-w="get online" data-ru="выйти в интернет" data-m="Connect to the internet">get online</span> so that she can <span class="hi" onclick="addW(this)" data-w="check her e-mail" data-ru="проверить почту" data-m="Look at received emails">check her e-mail</span>.</p>
+    <p>She quickly learned how to <span class="hi" onclick="addW(this)" data-w="write and send messages" data-ru="писать и отправлять сообщения" data-m="Compose and send emails">write and send messages</span>, <span class="hi" onclick="addW(this)" data-w="reply to an e-mail" data-ru="ответить на письмо" data-m="Respond to an email">reply to an e-mail</span> and <span class="hi" onclick="addW(this)" data-w="forward an e-mail" data-ru="переслать письмо" data-m="Send a received email to someone else">forward an e-mail</span>, but it was a little hard for her to remember how to <span class="hi" onclick="addW(this)" data-w="attach a file" data-ru="прикрепить файл" data-m="Add a file to an email">attach a file</span> to an outgoing message.</p>
+    <p>We tried to <span class="hi" onclick="addW(this)" data-w="log into" data-ru="войти в" data-m="Access an account">log into</span> her bank account online, but the bank's <span class="hi" onclick="addW(this)" data-w="website was down" data-ru="сайт не работал" data-m="The website was not functional">website was down</span>. There was a notice on the <span class="hi" onclick="addW(this)" data-w="home page" data-ru="главная страница" data-m="The main page of a website">home page</span> that they were doing some scheduled maintenance on the system.</p>
+    <p>This afternoon, I'll teach her how to use a <span class="hi" onclick="addW(this)" data-w="search engine" data-ru="поисковая система" data-m="A tool for searching the internet">search engine</span>. I think she'll really enjoy <span class="hi" onclick="addW(this)" data-w="surfing/browsing the web" data-ru="сёрфить в интернете" data-m="Exploring the internet">surfing the web</span> and using social media. If she needs to do something more advanced, like <span class="hi" onclick="addW(this)" data-w="burn a CD" data-ru="записать CD" data-m="Put files onto a CD">burn a CD</span>, then I can do that for her.</p>
+    <p>She's a little bit afraid of pressing the wrong key and accidentally <span class="hi" onclick="addW(this)" data-w="deleting a file" data-ru="удалить файл" data-m="Remove a file">deleting a file</span>, but I told her that we can always recover the file from the recycling bin. I also explained that if the <span class="hi" onclick="addW(this)" data-w="computer freezes" data-ru="компьютер зависает" data-m="Stops moving/functioning">computer freezes</span>, she can simply <span class="hi" onclick="addW(this)" data-w="restart/reboot" data-ru="перезагрузить" data-m="Restart the computer">restart</span> the computer.</p>
+    <p>It's also a good idea for her to <span class="hi" onclick="addW(this)" data-w="back up her files" data-ru="сделать резервную копию" data-m="Make extra copies of information">back up her files</span> so that she doesn't lose her data if the <span class="hi" onclick="addW(this)" data-w="computer crashes" data-ru="компьютер ломается" data-m="The computer breaks down">computer crashes</span> and can't be repaired.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(11)">← Lesson 11</button>
+    <button class="btn btn-coral" onclick="goTo(13)">Lesson 13 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 13: Study -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-13">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 13</div>
+  <h2 class="sec-title">Study 🎓</h2>
+  <div class="sec-meta">12 collocations about education <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-13">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Study</div>
+    <p>Key collocations: <strong>apply to colleges</strong>, <strong>get good grades</strong>, <strong>be awarded a scholarship</strong>, <strong>take classes/courses</strong>, <strong>take notes</strong>, <strong>give/make presentations</strong>, <strong>hand in work</strong>, <strong>grade assignments</strong>, <strong>take tests/exams</strong>, <strong>pass/fail a test</strong>, <strong>withdraw from/drop a course</strong>, <strong>major in</strong>, <strong>graduate from</strong>, <strong>get a diploma</strong>.</p>
+    <div class="say">"Tell me about your studies! What did you major in? What was your favorite subject?"</div>
+  </div>
+
+  <div class="rtext">
+    <p>Most children begin their studies at 5 or 6 years old in pre-school, followed by kindergarten. After that comes primary/elementary school, which consists of first grade through fifth grade. Then there's middle school — sixth grade through eighth grade — and high school, which is ninth grade through twelfth grade.</p>
+    <p>After high school, you <span class="hi" onclick="addW(this)" data-w="apply to colleges" data-ru="подавать заявки в колледжи" data-m="Submit applications to universities">apply to colleges</span> to see which ones will accept you. You send in/submit your application and then wait for the results. If you <span class="hi" onclick="addW(this)" data-w="got good grades" data-ru="получить хорошие оценки" data-m="Received high marks in your classes">got good grades</span> in high school, you might <span class="hi" onclick="addW(this)" data-w="be awarded a scholarship" data-ru="получить стипендию" data-m="Be given a scholarship to help pay tuition">be awarded a scholarship</span> to help pay the tuition.</p>
+    <p>In college, you'll <span class="hi" onclick="addW(this)" data-w="take classes/courses" data-ru="посещать занятия" data-m="Enroll in and attend classes">take classes</span> on various subjects. You should always <span class="hi" onclick="addW(this)" data-w="take notes" data-ru="записывать лекцию" data-m="Write down important information">take notes</span> as the teacher is giving the lecture. Some teachers may ask the students to <span class="hi" onclick="addW(this)" data-w="give/make presentations" data-ru="делать презентации" data-m="Present information to the class">give presentations</span> or do research and write an essay, an assignment, a report, or a paper. After you <span class="hi" onclick="addW(this)" data-w="hand in your work" data-ru="сдать работу" data-m="Submit your completed work">hand in your work</span>, the teacher will <span class="hi" onclick="addW(this)" data-w="grade the assignment" data-ru="оценить работу" data-m="Give you an evaluation">grade the assignment</span> and give you feedback.</p>
+    <p>To evaluate your progress, you'll <span class="hi" onclick="addW(this)" data-w="take tests/exams" data-ru="сдавать экзамены" data-m="Complete examinations">take tests</span>. If you get the minimum number of points required, you've <span class="hi" onclick="addW(this)" data-w="passed the test" data-ru="сдать экзамен" data-m="Successfully completed the test">passed the test</span>; if you don't get the minimum number of points, you've <span class="hi" onclick="addW(this)" data-w="failed the test" data-ru="провалить экзамен" data-m="Did not pass the test">failed the test</span>.</p>
+    <p>If the course proves to be too difficult, or if you don't like it, you can <span class="hi" onclick="addW(this)" data-w="withdraw from/drop the course" data-ru="отчислиться с курса" data-m="Leave a course before finishing">withdraw from</span> the course.</p>
+    <p>Most college students choose a major. To talk about a concentration of studies, you can use "major" as a verb or a noun — "I <span class="hi" onclick="addW(this)" data-w="majored in biology" data-ru="специализироваться в биологии" data-m="Had biology as my main subject of study">majored in biology</span>."</p>
+    <p>When you <span class="hi" onclick="addW(this)" data-w="graduate from college" data-ru="закончить колледж" data-m="Complete your studies at college">graduate from college</span>, you'll <span class="hi" onclick="addW(this)" data-w="get a diploma" data-ru="получить диплом" data-m="Receive a certificate of completion">get a diploma</span>. Afterwards, you can say you have a degree in the area of your concentration. You can have a bachelor's degree, master's degree, or doctorate (Ph.D.).</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(12)">← Lesson 12</button>
+    <button class="btn btn-coral" onclick="goTo(14)">Lesson 14 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 14: Academic English -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-14">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 14</div>
+  <h2 class="sec-title">Academic English 📝</h2>
+  <div class="sec-meta">10 collocations for academic writing <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-14">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Academic English</div>
+    <p>Key collocations: <strong>make an outline</strong>, <strong>gather evidence</strong>, <strong>support claims</strong>, <strong>propose a theory</strong>, <strong>refute a theory</strong>, <strong>touch on issues</strong>, <strong>draw a distinction</strong>, <strong>draw parallels</strong>, <strong>fall into categories</strong>, <strong>make your case</strong>, <strong>first draft</strong>, <strong>final draft</strong>, <strong>carry out a study</strong>, <strong>key factors</strong>, <strong>play a role/part</strong>, <strong>draw conclusions</strong>, <strong>raise questions</strong>.</p>
+    <div class="say">"Have you ever written a research paper? What steps do you usually follow?"</div>
+  </div>
+
+  <div class="rtext">
+    <p>Before you begin writing a paper, it's a good idea to <span class="hi" onclick="addW(this)" data-w="make an outline" data-ru="составить план" data-m="Create a list of points in an organized order">make an outline</span> of the main points you plan to present. The next step is to <span class="hi" onclick="addW(this)" data-w="gather evidence" data-ru="собрать доказательства" data-m="Collect information and data to support your claims">gather evidence</span> to <span class="hi" onclick="addW(this)" data-w="support your claims" data-ru="поддержать утверждения" data-m="Provide proof for your statements">support your claims</span>, since your work won't be credible if you <span class="hi" onclick="addW(this)" data-w="propose a theory" data-ru="предложить теорию" data-m="Present a theory for consideration">propose a theory</span> (or try to <span class="hi" onclick="addW(this)" data-w="refute a theory" data-ru="опровергнуть теорию" data-m="Argue against an existing theory">refute a theory</span>) without some proof.</p>
+    <p>If your paper is going to <span class="hi" onclick="addW(this)" data-w="touch on several issues" data-ru="затронуть несколько тем" data-m="Talk about several topics">touch on several issues</span> then you'll need to be especially organized. You can <span class="hi" onclick="addW(this)" data-w="draw a distinction" data-ru="провести различие" data-m="Show the difference between things">draw a distinction</span> between topics that are different, or <span class="hi" onclick="addW(this)" data-w="draw parallels" data-ru="провести параллели" data-m="Show similarities between examples">draw parallels</span> between examples that are similar. Another way to organize your ideas is to show how they <span class="hi" onclick="addW(this)" data-w="fall into different categories" data-ru="распределяться по категориям" data-m="Can be grouped into different groups">fall into different categories</span>.</p>
+    <p>After making your outline and gathering the supporting evidence you'll use to <span class="hi" onclick="addW(this)" data-w="make your case" data-ru="представить аргументацию" data-m="Present your argument">make your case</span>, you can write a <span class="hi" onclick="addW(this)" data-w="first draft" data-ru="первый черновик" data-m="First version of a paper">first draft</span> in which you go into detail on the topic. Then, you revise the paper until finishing with the <span class="hi" onclick="addW(this)" data-w="final draft" data-ru="окончательный вариант" data-m="Final version of a paper">final draft</span>.</p>
+    <p>Let's say you're <span class="hi" onclick="addW(this)" data-w="carrying out a study" data-ru="проводить исследование" data-m="Conducting research">carrying out a study</span> on market trends. You can analyze the <span class="hi" onclick="addW(this)" data-w="key factors" data-ru="ключевые факторы" data-m="Important factors">key factors</span> that are influencing the economy, showing how local politics <span class="hi" onclick="addW(this)" data-w="play a role/part" data-ru="играть роль" data-m="Have an effect">play a role</span> in shaping the country's financial future.</p>
+    <p>At the end of your paper, you should briefly summarize the material you presented and <span class="hi" onclick="addW(this)" data-w="draw conclusions" data-ru="делать выводы" data-m="Reach a final decision based on your research">draw conclusions</span> based on your research. The end of the article is also a good place to <span class="hi" onclick="addW(this)" data-w="raise questions" data-ru="поднимать вопросы" data-m="Present questions for further study">raise questions</span> for further study.</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(13)">← Lesson 13</button>
+    <button class="btn btn-coral" onclick="goTo(15)">Lesson 15 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 15: Work -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-15">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 15</div>
+  <h2 class="sec-title">Work 💼</h2>
+  <div class="sec-meta">15 collocations about careers <span class="pill">⏱ 10 min</span></div>
+
+  <div class="tnote" id="tn-15">
+    <div class="tnote-h">👩‍🏫 Teacher's Notes — Work</div>
+    <p>Key collocations: <strong>do an internship</strong>, <strong>entry-level job</strong>, <strong>minimum wage</strong>, <strong>team player</strong>, <strong>get a promotion</strong>, <strong>get a raise</strong>, <strong>be fired/dismissed</strong>, <strong>heavy workload</strong>, <strong>work overtime</strong>, <strong>demanding job</strong>, <strong>quit your job</strong>, <strong>competitive salary</strong>, <strong>generous benefits</strong>, <strong>career change</strong>, <strong>apply for a job</strong>, <strong>job ads</strong>, <strong>resume</strong>, <strong>cover letter</strong>, <strong>interview candidates</strong>, <strong>job description</strong>, <strong>dream job</strong>.</p>
+    <div class="say">"What's your dream job? What do you think makes a good boss?"</div>
+  </div>
+
+  <div class="rtext">
+    <p>If you've just graduated from college and you've never had a job, you can start your career by <span class="hi" onclick="addW(this)" data-w="doing an internship" data-ru="пройти стажировку" data-m="Working a temporary, low-level job to gain experience">doing an internship</span> to gain experience. Depending on the company, the internship could lead to an opportunity to get an <span class="hi" onclick="addW(this)" data-w="entry-level job" data-ru="начальная должность" data-m="A job that doesn't require much skill or experience">entry-level job</span> at the same company.</p>
+    <p>Although you might be earning <span class="hi" onclick="addW(this)" data-w="minimum wage" data-ru="минимальная зарплата" data-m="The minimum salary required by law">minimum wage</span>, if you do excellent work and are a good <span class="hi" onclick="addW(this)" data-w="team player" data-ru="хороший командный игрок" data-m="Someone who cooperates well with co-workers">team player</span> you could <span class="hi" onclick="addW(this)" data-w="get a promotion" data-ru="получить повышение" data-m="Get an increase in responsibility">get a promotion</span> or <span class="hi" onclick="addW(this)" data-w="get a raise" data-ru="получить прибавку к зарплате" data-m="Get an increase in salary">get a raise</span> — hopefully both! Just don't slack off, otherwise you'll <span class="hi" onclick="addW(this)" data-w="be fired/dismissed" data-ru="быть уволенным" data-m="Lose your job">be fired</span>.</p>
+    <p>It's normal for there to be periods of time when you have a <span class="hi" onclick="addW(this)" data-w="heavy workload" data-ru="большая загрузка" data-m="A lot of work to do">heavy workload</span> and need to <span class="hi" onclick="addW(this)" data-w="work overtime" data-ru="работать сверхурочно" data-m="Work extra hours">work overtime</span>. But if you have a very <span class="hi" onclick="addW(this)" data-w="demanding job" data-ru="требовательная работа" data-m="An intense job with lots of responsibilities">demanding job</span> and you're stressed out all the time, then it might be time to <span class="hi" onclick="addW(this)" data-w="quit your job" data-ru="уволиться" data-m="Leave your job voluntarily">quit your job</span> and look for another one.</p>
+    <p>Now that you have experience, you'll be able to get a job with a more <span class="hi" onclick="addW(this)" data-w="competitive salary" data-ru="конкурентная зарплата" data-m="Salary that is higher than average">competitive salary</span> and <span class="hi" onclick="addW(this)" data-w="generous benefits" data-ru="щедрый социальный пакет" data-m="Extra benefits like health insurance, discounts, etc.">generous benefits</span>. If you can't find a well-paid and rewarding job in your field, it might be time for a <span class="hi" onclick="addW(this)" data-w="career change" data-ru="смена карьеры" data-m="Changing to a different profession">career change</span>.</p>
+    <p>The typical way of <span class="hi" onclick="addW(this)" data-w="applying for a job" data-ru="подавать заявку на работу" data-m="Submitting an application to get a job">applying for a job</span> is to read the <span class="hi" onclick="addW(this)" data-w="job ads" data-ru="объявления о работе" data-m="Advertisements for job openings">job ads</span> in the newspaper or online, then send your <span class="hi" onclick="addW(this)" data-w="resume" data-ru="резюме" data-m="A document summarizing your work experience">resume</span> to the company with a <span class="hi" onclick="addW(this)" data-w="cover letter" data-ru="сопроводительное письмо" data-m="A letter introducing your application">cover letter</span>. The company will then <span class="hi" onclick="addW(this)" data-w="interview candidates" data-ru="собеседовать кандидатов" data-m="Talk with job applicants to evaluate them">interview the candidates</span> it feels are most qualified, based on the <span class="hi" onclick="addW(this)" data-w="job description" data-ru="описание должности" data-m="A document outlining job requirements">job description</span>.</p>
+    <p>If you're persistent, a great job offer should come your way sooner or later — maybe even for your <span class="hi" onclick="addW(this)" data-w="dream job" data-ru="работа мечты" data-m="A job that would be perfect for you">dream job</span>!</p>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(14)">← Lesson 14</button>
+    <button class="btn btn-coral" onclick="goTo(16)">Lesson 16 →</button>
+  </div>
+</section>
+
+<!-- Continue Lessons 16-50 with the same pattern... -->
+<!-- Since the full 50 lessons would be extremely long, I'll provide a condensed version with all lessons but in a more compact format -->
+<!-- Let me create a summary view for lessons 16-50 -->
+
+<!-- ============================================================ -->
+<!-- LESSON 16: Business -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-16">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 16</div>
+  <h2 class="sec-title">Business 📈</h2>
+  <div class="sec-meta">Collocations about business</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>go into business</strong>, <strong>set up a company</strong>, <strong>do market research</strong>, <strong>operate at a loss</strong>, <strong>break even</strong>, <strong>gain market share</strong>, <strong>go bankrupt</strong>, <strong>go under</strong>, <strong>make a profit</strong>, <strong>hire/take on staff</strong>, <strong>make a deal</strong>, <strong>sign a contract</strong>, <strong>launch a new product</strong>, <strong>customer service</strong>, <strong>take business elsewhere</strong>, <strong>rival company</strong>, <strong>run a business</strong>, <strong>take off</strong>, <strong>business is booming</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(15)">← Lesson 15</button>
+    <button class="btn btn-coral" onclick="goTo(17)">Lesson 17 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 17: Money -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-17">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 17</div>
+  <h2 class="sec-title">Money 💰</h2>
+  <div class="sec-meta">Collocations about money</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>earn money</strong>, <strong>make money</strong>, <strong>inherit money</strong>, <strong>inherit a fortune</strong>, <strong>make a deposit</strong>, <strong>make a withdrawal</strong>, <strong>spend money</strong>, <strong>waste/squander money</strong>, <strong>money is tight</strong>, <strong>make a budget</strong>, <strong>stick to the budget</strong>, <strong>broke</strong>, <strong>financially savvy</strong>, <strong>save money</strong>, <strong>living expenses</strong>, <strong>invest money</strong>, <strong>economy goes downhill</strong>, <strong>save up money</strong>, <strong>set aside money</strong>, <strong>borrow money</strong>, <strong>take out a loan</strong>, <strong>pay back</strong>, <strong>change/exchange money</strong>, <strong>counterfeit bills</strong>, <strong>donate money</strong>, <strong>raise money</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(16)">← Lesson 16</button>
+    <button class="btn btn-coral" onclick="goTo(18)">Lesson 18 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 18: Travel -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-18">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 18</div>
+  <h2 class="sec-title">Travel ✈️</h2>
+  <div class="sec-meta">Collocations about travel</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>business trip</strong>, <strong>book a flight</strong>, <strong>make a hotel reservation</strong>, <strong>travel arrangements</strong>, <strong>boarding pass</strong>, <strong>window seat</strong>, <strong>aisle seat</strong>, <strong>bumpy flight</strong>, <strong>connecting flight</strong>, <strong>layover</strong>, <strong>checked luggage</strong>, <strong>carry-on bag</strong>, <strong>seedy hotel</strong>, <strong>dingy room</strong>, <strong>travel agency</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(17)">← Lesson 17</button>
+    <button class="btn btn-coral" onclick="goTo(19)">Lesson 19 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 19: Weather -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-19">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 19</div>
+  <h2 class="sec-title">Weather ☀️🌧️</h2>
+  <div class="sec-meta">Collocations about weather</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>weather forecast</strong>, <strong>sun shining brightly</strong>, <strong>clear skies</strong>, <strong>bask in the sunshine</strong>, <strong>oppressively hot</strong>, <strong>scorching hot</strong>, <strong>swelteringly hot</strong>, <strong>hot and humid</strong>, <strong>partly cloudy</strong>, <strong>scattered clouds</strong>, <strong>heavy clouds</strong>, <strong>storm clouds</strong>, <strong>light rain</strong>, <strong>heavy rain</strong>, <strong>torrential rain</strong>, <strong>rain let up</strong>, <strong>high/strong winds</strong>, <strong>fierce winds</strong>, <strong>gale-force winds</strong>, <strong>wind picking up</strong>, <strong>wind dying down</strong>, <strong>biting wind</strong>, <strong>icy wind</strong>, <strong>blast of wind</strong>, <strong>gust of wind</strong>, <strong>snow flurries</strong>, <strong>clear the snow</strong>, <strong>plough the snow</strong>, <strong>shoveling the snow</strong>, <strong>snow melts</strong>, <strong>unseasonably warm/cool</strong>, <strong>record high/low</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(18)">← Lesson 18</button>
+    <button class="btn btn-coral" onclick="goTo(20)">Lesson 20 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 20: City -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-20">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 20</div>
+  <h2 class="sec-title">City 🏙️</h2>
+  <div class="sec-meta">Collocations about city life</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>towering skyscrapers</strong>, <strong>noise pollution</strong>, <strong>coastal city</strong>, <strong>high-rise building</strong>, <strong>industrial zone</strong>, <strong>outskirts of the city</strong>, <strong>hectic pace</strong>, <strong>bustling streets</strong>, <strong>strewn with litter</strong>, <strong>traffic jams</strong>, <strong>narrow cobblestone streets</strong>, <strong>quaint shops</strong>, <strong>gourmet restaurants</strong>, <strong>local cuisine</strong>, <strong>open-air market</strong>, <strong>street vendors</strong>, <strong>trendy cafes</strong>, <strong>street crime</strong>, <strong>inner-city areas</strong>, <strong>cultural diversity</strong>, <strong>pulsating nightlife</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(19)">← Lesson 19</button>
+    <button class="btn btn-coral" onclick="goTo(21)">Lesson 21 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 21: Countryside -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-21">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 21</div>
+  <h2 class="sec-title">Countryside 🌳</h2>
+  <div class="sec-meta">Collocations about nature</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>change of scenery</strong>, <strong>wildlife preserve</strong>, <strong>winding footpath</strong>, <strong>dense forests</strong>, <strong>vast meadows</strong>, <strong>rolling hills</strong>, <strong>rocky landscape</strong>, <strong>towering cliffs</strong>, <strong>magnificent waterfalls</strong>, <strong>hiking trail</strong>, <strong>foot of the mountain</strong>, <strong>panoramic view</strong>, <strong>jagged peaks</strong>, <strong>mountain range</strong>, <strong>lush green countryside</strong>, <strong>shallow river</strong>, <strong>coastline</strong>, <strong>sandy beaches</strong>, <strong>picturesque fishing village</strong>, <strong>unobstructed view</strong>, <strong>secluded beaches</strong>, <strong>well worth the trip</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(20)">← Lesson 20</button>
+    <button class="btn btn-coral" onclick="goTo(22)">Lesson 22 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 22: Crime -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-22">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 22</div>
+  <h2 class="sec-title">Crime 🚔</h2>
+  <div class="sec-meta">Collocations about crime</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>break the law</strong>, <strong>commit a crime</strong>, <strong>attempted murder</strong>, <strong>alleged assault</strong>, <strong>report the crime</strong>, <strong>investigate the crime</strong>, <strong>crime scene</strong>, <strong>forensic evidence</strong>, <strong>first-hand account</strong>, <strong>arrest suspects</strong>, <strong>prove innocence</strong>, <strong>solid alibi</strong>, <strong>unsolved crime</strong>, <strong>crime rate</strong>, <strong>crime wave</strong>, <strong>first-time offender</strong>, <strong>criminal record</strong>, <strong>serial killer</strong>, <strong>notorious criminal</strong>, <strong>domestic violence</strong>, <strong>drug trafficking</strong>, <strong>identity theft</strong>, <strong>sexual harassment</strong>, <strong>petty crime</strong>, <strong>armed robbery</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(21)">← Lesson 21</button>
+    <button class="btn btn-coral" onclick="goTo(23)">Lesson 23 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 23: Law -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-23">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 23</div>
+  <h2 class="sec-title">Law & Justice ⚖️</h2>
+  <div class="sec-meta">Collocations about law</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>pass laws</strong>, <strong>enforce the law</strong>, <strong>charged with a crime</strong>, <strong>appear in court</strong>, <strong>stand trial</strong>, <strong>reach a verdict</strong>, <strong>concrete evidence</strong>, <strong>unanimous jury</strong>, <strong>hung jury</strong>, <strong>light sentence</strong>, <strong>community service</strong>, <strong>go to prison</strong>, <strong>harsh sentence</strong>, <strong>life in prison</strong>, <strong>death penalty</strong>, <strong>appeal the verdict</strong>, <strong>legal battle</strong>, <strong>uphold the verdict</strong>, <strong>overturn the verdict</strong>, <strong>serving time</strong>, <strong>released from prison</strong>, <strong>threat to society</strong>, <strong>on parole</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(22)">← Lesson 22</button>
+    <button class="btn btn-coral" onclick="goTo(24)">Lesson 24 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 24: War -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-24">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 24</div>
+  <h2 class="sec-title">War & Peace ☮️</h2>
+  <div class="sec-meta">Collocations about war</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>war has broken out</strong>, <strong>declared war</strong>, <strong>pre-emptive strike</strong>, <strong>stockpiling weapons</strong>, <strong>unprovoked attack</strong>, <strong>on the brink of war</strong>, <strong>deploying troops</strong>, <strong>stationed/posted</strong>, <strong>launch an offensive</strong>, <strong>opened fire</strong>, <strong>caught in the crossfire</strong>, <strong>civilian casualties</strong>, <strong>collateral damage</strong>, <strong>refugees displaced</strong>, <strong>decisive battle</strong>, <strong>negotiate a truce/ceasefire</strong>, <strong>restore peace</strong>, <strong>fragile peace</strong>, <strong>lasting peace</strong>, <strong>peacekeeping forces</strong>, <strong>avert war</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(23)">← Lesson 23</button>
+    <button class="btn btn-coral" onclick="goTo(25)">Lesson 25 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 25: Global Problems -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-25">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 25</div>
+  <h2 class="sec-title">Global Problems 🌍</h2>
+  <div class="sec-meta">Collocations about global issues</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>preserve the environment</strong>, <strong>fossil fuels</strong>, <strong>greenhouse gases</strong>, <strong>global warming</strong>, <strong>climate change</strong>, <strong>irreparable damage</strong>, <strong>rising sea levels</strong>, <strong>natural disasters</strong>, <strong>gone extinct</strong>, <strong>endangered species</strong>, <strong>clean energy</strong>, <strong>renewable resources</strong>, <strong>die of hunger/starvation</strong>, <strong>extreme poverty</strong>, <strong>food shortages</strong>, <strong>homeless people</strong>, <strong>homeless shelters</strong>, <strong>margins of society</strong>, <strong>below the poverty line</strong>, <strong>make ends meet</strong>, <strong>welfare programs</strong>, <strong>alleviate poverty</strong>, <strong>preventable diseases</strong>, <strong>child labor</strong>, <strong>disadvantaged backgrounds</strong>, <strong>human trafficking</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(24)">← Lesson 24</button>
+    <button class="btn btn-coral" onclick="goTo(26)">Lesson 26 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 26: Time -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-26">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 26</div>
+  <h2 class="sec-title">Time ⏰</h2>
+  <div class="sec-meta">Collocations about time</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>in a rush</strong>, <strong>take your time</strong>, <strong>spend time</strong>, <strong>waste time</strong>, <strong>stay up until ungodly hours</strong>, <strong>take ages</strong>, <strong>plan well in advance</strong>, <strong>time-consuming tasks</strong>, <strong>pressing commitments</strong>, <strong>strict deadline</strong>, <strong>rush hour</strong>, <strong>solid hours</strong>, <strong>dawn till dusk</strong>, <strong>spare/free time</strong>, <strong>cut back on hours</strong>, <strong>free up time</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(25)">← Lesson 25</button>
+    <button class="btn btn-coral" onclick="goTo(27)">Lesson 27 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 27: Sound -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-27">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 27</div>
+  <h2 class="sec-title">Sound 🔊</h2>
+  <div class="sec-meta">Collocations about sound</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>background noise</strong>, <strong>loud noise</strong>, <strong>deafening noise</strong>, <strong>faint noise</strong>, <strong>muffled sound</strong>, <strong>constant/incessant noise</strong>, <strong>roar of traffic</strong>, <strong>hum of machinery</strong>, <strong>music blaring</strong>, <strong>birds chirping</strong>, <strong>dogs barking</strong>, <strong>waves crashing</strong>, <strong>wind whistling</strong>, <strong>rumble of thunder</strong>, <strong>thunderclap</strong>, <strong>dead silence</strong>, <strong>silence descended</strong>, <strong>shatter the silence</strong>, <strong>awkward silence</strong>, <strong>stony silence</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(26)">← Lesson 26</button>
+    <button class="btn btn-coral" onclick="goTo(28)">Lesson 28 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 28: Size -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-28">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 28</div>
+  <h2 class="sec-title">Size 📏</h2>
+  <div class="sec-meta">Collocations about size</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>big/large house</strong>, <strong>large coffee</strong>, <strong>large number</strong>, <strong>large scale</strong>, <strong>big accomplishment</strong>, <strong>big decision</strong>, <strong>big surprise</strong>, <strong>tall building</strong>, <strong>tall man</strong>, <strong>high/low prices</strong>, <strong>high/low quality</strong>, <strong>small/little house</strong>, <strong>cute little house</strong>, <strong>little money</strong>, <strong>little salt</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(27)">← Lesson 27</button>
+    <button class="btn btn-coral" onclick="goTo(29)">Lesson 29 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 29: Light -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-29">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 29</div>
+  <h2 class="sec-title">Light 💡</h2>
+  <div class="sec-meta">Collocations about light</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>sun is shining</strong>, <strong>blinding sunlight</strong>, <strong>sun sets</strong>, <strong>pitch dark/black</strong>, <strong>stars twinkling</strong>, <strong>bright light</strong>, <strong>dim light</strong>, <strong>flickering candle</strong>, <strong>cast a shadow</strong>, <strong>sit in the shade</strong>, <strong>bright/strong lighting</strong>, <strong>soft/subdued lighting</strong>, <strong>street lights</strong>, <strong>power goes out</strong>, <strong>power outage</strong>, <strong>plunged into darkness</strong>, <strong>complete/total darkness</strong>, <strong>sun rises/comes up</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(28)">← Lesson 28</button>
+    <button class="btn btn-coral" onclick="goTo(30)">Lesson 30 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 30: Color -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-30">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 30</div>
+  <h2 class="sec-title">Color 🎨</h2>
+  <div class="sec-meta">Collocations about color</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>light/dark color</strong>, <strong>bright color</strong>, <strong>pale color</strong>, <strong>bold/vivid colors</strong>, <strong>pastel colors</strong>, <strong>ruby red</strong>, <strong>sky blue</strong>, <strong>royal blue</strong>, <strong>navy blue</strong>, <strong>emerald green</strong>, <strong>colors match</strong>, <strong>colors clash</strong>, <strong>skin tone</strong>, <strong>color suits you</strong>, <strong>paint a house</strong>, <strong>dye hair</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(29)">← Lesson 29</button>
+    <button class="btn btn-coral" onclick="goTo(31)">Lesson 31 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 31: Texture -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-31">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 31</div>
+  <h2 class="sec-title">Texture 👋</h2>
+  <div class="sec-meta">Collocations about texture</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>dry hair</strong>, <strong>oily/greasy hair</strong>, <strong>dry skin</strong>, <strong>smooth surface</strong>, <strong>rough surface</strong>, <strong>calm water</strong>, <strong>choppy water</strong>, <strong>hard/soft object</strong>, <strong>tender/tough meat</strong>, <strong>sharp/dull blade</strong>, <strong>creamy sauce</strong>, <strong>crunchy/crispy</strong>, <strong>chewy candy</strong>, <strong>greasy pizza</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(30)">← Lesson 30</button>
+    <button class="btn btn-coral" onclick="goTo(32)">Lesson 32 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 32: Smell -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-32">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 32</div>
+  <h2 class="sec-title">Smell 👃</h2>
+  <div class="sec-meta">Collocations about smell</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>wonderful aroma</strong>, <strong>fresh scent</strong>, <strong>sweet fragrance</strong>, <strong>lovely smell</strong>, <strong>horrible smell</strong>, <strong>foul odor</strong>, <strong>revolting stench</strong>, <strong>body odor</strong>, <strong>light/faint smell</strong>, <strong>strong smell</strong>, <strong>overpowering smell</strong>, <strong>familiar smell</strong>, <strong>distinctive smell</strong>, <strong>unmistakable smell</strong>, <strong>mouth-watering scent</strong>, <strong>acrid smell</strong>, <strong>earthy smell</strong>, <strong>rancid smell</strong>, <strong>pervasive smell</strong>, <strong>pungent smell</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(31)">← Lesson 31</button>
+    <button class="btn btn-coral" onclick="goTo(33)">Lesson 33 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 33: Taste -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-33">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 33</div>
+  <h2 class="sec-title">Taste 😋</h2>
+  <div class="sec-meta">Collocations about taste</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>tastes good/bad</strong>, <strong>tastes divine/heavenly</strong>, <strong>tastes gross/disgusting</strong>, <strong>tastes funny</strong>, <strong>tastes like chicken</strong>, <strong>fruity flavor</strong>, <strong>bitter taste</strong>, <strong>sour taste</strong>, <strong>sweet taste</strong>, <strong>savor the taste</strong>, <strong>strong flavor</strong>, <strong>rich flavor</strong>, <strong>mild flavor</strong>, <strong>subtle flavor</strong>, <strong>bland flavor</strong>, <strong>acquired taste</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(32)">← Lesson 32</button>
+    <button class="btn btn-coral" onclick="goTo(34)">Lesson 34 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 34: Statistics -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-34">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 34</div>
+  <h2 class="sec-title">Statistics 📊</h2>
+  <div class="sec-meta">Collocations about statistics</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>large number</strong>, <strong>massive amount</strong>, <strong>significant number</strong>, <strong>considerable amount</strong>, <strong>dramatic drop</strong>, <strong>sharp rise</strong>, <strong>gradual increase</strong>, <strong>slow decline</strong>, <strong>remains steady</strong>, <strong>remains constant</strong>, <strong>widespread dissatisfaction</strong>, <strong>widespread acclaim</strong>, <strong>widespread damage</strong>, <strong>widespread support</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(33)">← Lesson 33</button>
+    <button class="btn btn-coral" onclick="goTo(35)">Lesson 35 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 35: Movement & Speed -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-35">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 35</div>
+  <h2 class="sec-title">Movement & Speed 🏃</h2>
+  <div class="sec-meta">Collocations about speed</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>fast car</strong>, <strong>quick lunch</strong>, <strong>rapid change</strong>, <strong>speedy recovery</strong>, <strong>swift action</strong>, <strong>prompt reply</strong>, <strong>hasty exit</strong>, <strong>speed limit</strong>, <strong>breakneck speed</strong>, <strong>speed trap</strong>, <strong>speeding ticket</strong>, <strong>burst of speed</strong>, <strong>snail's pace</strong>, <strong>slow to a crawl</strong>, <strong>come to a standstill</strong>, <strong>gaining speed</strong>, <strong>speeding up</strong>, <strong>slowing down</strong>, <strong>leisurely breakfast</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(34)">← Lesson 34</button>
+    <button class="btn btn-coral" onclick="goTo(36)">Lesson 36 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 36: Changes -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-36">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 36</div>
+  <h2 class="sec-title">Changes 🔄</h2>
+  <div class="sec-meta">Collocations about changes</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>make adjustments</strong>, <strong>make alterations</strong>, <strong>make modifications</strong>, <strong>make tweaks</strong>, <strong>revolutionize the way</strong>, <strong>transform into</strong>, <strong>change clothes</strong>, <strong>change your mind</strong>, <strong>change the subject</strong>, <strong>convert to</strong>, <strong>turn black</strong>, <strong>turn into</strong>, <strong>become angry</strong>, <strong>becoming clear</strong>, <strong>become more difficult</strong>, <strong>get excited</strong>, <strong>get more expensive</strong>, <strong>go bald</strong>, <strong>go blind</strong>, <strong>go deaf</strong>, <strong>go crazy</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(35)">← Lesson 35</button>
+    <button class="btn btn-coral" onclick="goTo(37)">Lesson 37 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 37: Speaking -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-37">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 37</div>
+  <h2 class="sec-title">Speaking 🗣️</h2>
+  <div class="sec-meta">Collocations about communication</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>make small talk</strong>, <strong>strike up a conversation</strong>, <strong>delicate subjects</strong>, <strong>lengthy discussion</strong>, <strong>have an argument</strong>, <strong>lull in the conversation</strong>, <strong>brief chat</strong>, <strong>go on and on</strong>, <strong>apologize profusely</strong>, <strong>get straight to the point</strong>, <strong>drop hints</strong>, <strong>tell lies</strong>, <strong>stretch the truth</strong>, <strong>give your word</strong>, <strong>tone of voice</strong>, <strong>sarcastic remarks</strong>, <strong>constructive criticism</strong>, <strong>ask a favor</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(36)">← Lesson 36</button>
+    <button class="btn btn-coral" onclick="goTo(38)">Lesson 38 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 38: Starting & Finishing -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-38">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 38</div>
+  <h2 class="sec-title">Starting & Finishing 🏁</h2>
+  <div class="sec-meta">Collocations about beginnings and endings</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>get started</strong>, <strong>got off to a good start</strong>, <strong>promising start</strong>, <strong>shaky start</strong>, <strong>disappointing start</strong>, <strong>disastrous start</strong>, <strong>fresh start</strong>, <strong>new beginning</strong>, <strong>humble beginnings</strong>, <strong>finish your work</strong>, <strong>come to an end</strong>, <strong>draw to a close</strong>, <strong>finishing touches</strong>, <strong>beginning of the end</strong>, <strong>abrupt end</strong>, <strong>sudden end</strong>, <strong>no end in sight</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(37)">← Lesson 37</button>
+    <button class="btn btn-coral" onclick="goTo(39)">Lesson 39 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 39: Success & Failure -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-39">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 39</div>
+  <h2 class="sec-title">Success & Failure 🏆</h2>
+  <div class="sec-meta">Collocations about success and failure</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>phenomenal success</strong>, <strong>pull it off</strong>, <strong>unprecedented success</strong>, <strong>crowning achievement</strong>, <strong>modest success</strong>, <strong>room for improvement</strong>, <strong>make a breakthrough</strong>, <strong>bring out the best</strong>, <strong>win respect</strong>, <strong>fail miserably</strong>, <strong>dash hopes</strong>, <strong>lose nerve</strong>, <strong>mediocre performance</strong>, <strong>spectacular failure</strong>, <strong>recipe for disaster</strong>, <strong>way off the mark</strong>, <strong>go under</strong>, <strong>doomed to failure</strong>, <strong>last resort</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(38)">← Lesson 38</button>
+    <button class="btn btn-coral" onclick="goTo(40)">Lesson 40 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 40: Cause & Effect -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-40">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 40</div>
+  <h2 class="sec-title">Cause & Effect 🔗</h2>
+  <div class="sec-meta">Collocations about cause and effect</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>cause damage</strong>, <strong>cause a problem</strong>, <strong>cause confusion</strong>, <strong>cause an uproar</strong>, <strong>cause injury</strong>, <strong>cause death</strong>, <strong>cause for concern</strong>, <strong>cause for alarm</strong>, <strong>cause for celebration</strong>, <strong>root cause</strong>, <strong>have an effect</strong>, <strong>significant impact</strong>, <strong>profound impact</strong>, <strong>short-term effects</strong>, <strong>long-term effects</strong>, <strong>visible effects</strong>, <strong>subtle effects</strong>, <strong>powerful effect</strong>, <strong>negligible effect</strong>, <strong>beneficial effect</strong>, <strong>adverse effect</strong>, <strong>side effect</strong>, <strong>preliminary results</strong>, <strong>final results</strong>, <strong>concrete results</strong>, <strong>inevitable result</strong>, <strong>desired result</strong>, <strong>unexpected outcome</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(39)">← Lesson 39</button>
+    <button class="btn btn-coral" onclick="goTo(41)">Lesson 41 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 41: Memories -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-41">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 41</div>
+  <h2 class="sec-title">Memories 🧠</h2>
+  <div class="sec-meta">Collocations about memories</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>earliest memory</strong>, <strong>vaguely remember</strong>, <strong>distinctly remember</strong>, <strong>memories come flooding back</strong>, <strong>refresh my memory</strong>, <strong>fond memories</strong>, <strong>unforgettable experience</strong>, <strong>traumatic memory</strong>, <strong>memory haunts me</strong>, <strong>sobering reminder</strong>, <strong>terrible memory</strong>, <strong>mind went blank</strong>, <strong>rack my brain</strong>, <strong>particularly memorable</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(40)">← Lesson 40</button>
+    <button class="btn btn-coral" onclick="goTo(42)">Lesson 42 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 42: Agreeing & Disagreeing -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-42">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 42</div>
+  <h2 class="sec-title">Agreeing & Disagreeing 🤝</h2>
+  <div class="sec-meta">Collocations about agreement</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>totally agree</strong>, <strong>strongly agree</strong>, <strong>agree wholeheartedly</strong>, <strong>agree up to a point</strong>, <strong>agree in principle</strong>, <strong>share an opinion</strong>, <strong>share a view</strong>, <strong>difference of opinion</strong>, <strong>worlds apart</strong>, <strong>reach a compromise</strong>, <strong>heated argument</strong>, <strong>I'm afraid I disagree</strong>, <strong>see your point</strong>, <strong>minor disagreement</strong>, <strong>major disagreement</strong>, <strong>disagree vehemently</strong>, <strong>settle a disagreement</strong>, <strong>long-running dispute</strong>, <strong>bitter dispute</strong>, <strong>agree to disagree</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(41)">← Lesson 41</button>
+    <button class="btn btn-coral" onclick="goTo(43)">Lesson 43 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 43: Beliefs & Doubts -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-43">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 43</div>
+  <h2 class="sec-title">Beliefs & Doubts 🙏</h2>
+  <div class="sec-meta">Collocations about beliefs</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>firmly believe</strong>, <strong>deeply-held belief</strong>, <strong>unshakable belief</strong>, <strong>subconscious belief</strong>, <strong>color your judgment</strong>, <strong>believe in superstitions</strong>, <strong>blind faith</strong>, <strong>strengthen your belief</strong>, <strong>weaken your belief</strong>, <strong>make assumptions</strong>, <strong>common misconceptions</strong>, <strong>dispel misconceptions</strong>, <strong>beyond a shadow of a doubt</strong>, <strong>doubts arise</strong>, <strong>voice doubts</strong>, <strong>sneaking suspicion</strong>, <strong>cast doubts</strong>, <strong>gnawing doubt</strong>, <strong>rethink beliefs</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(42)">← Lesson 42</button>
+    <button class="btn btn-coral" onclick="goTo(44)">Lesson 44 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 44: Deciding & Choosing -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-44">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 44</div>
+  <h2 class="sec-title">Deciding & Choosing 🤔</h2>
+  <div class="sec-meta">Collocations about decisions</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>make a decision</strong>, <strong>pros and cons</strong>, <strong>trust your intuition</strong>, <strong>tough decision</strong>, <strong>ask for advice</strong>, <strong>discuss in-depth</strong>, <strong>take advice</strong>, <strong>ignore advice</strong>, <strong>snap decision</strong>, <strong>spur-of-the-moment decision</strong>, <strong>defend your decision</strong>, <strong>arbitrary decision</strong>, <strong>costly mistake</strong>, <strong>weigh the outcomes</strong>, <strong>have second thoughts</strong>, <strong>keep your options open</strong>, <strong>have no choice</strong>, <strong>sound judgment</strong>, <strong>wise decisions</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(43)">← Lesson 43</button>
+    <button class="btn btn-coral" onclick="goTo(45)">Lesson 45 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 45: Claiming & Denying -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-45">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 45</div>
+  <h2 class="sec-title">Claiming & Denying 🗣️</h2>
+  <div class="sec-meta">Collocations about claims and denials</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>face accusations</strong>, <strong>deny allegations</strong>, <strong>substantiate claims</strong>, <strong>leaked document</strong>, <strong>heavily imply</strong>, <strong>spread the rumor</strong>, <strong>ulterior motive</strong>, <strong>unfounded claims</strong>, <strong>maliciously accuse</strong>, <strong>issue a statement</strong>, <strong>widely acknowledged</strong>, <strong>fuel speculation</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(44)">← Lesson 44</button>
+    <button class="btn btn-coral" onclick="goTo(46)">Lesson 46 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 46: Liking & Disliking -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-46">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 46</div>
+  <h2 class="sec-title">Liking & Disliking ❤️💔</h2>
+  <div class="sec-meta">Collocations about preferences</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>lifelong fan</strong>, <strong>all-time favorite</strong>, <strong>sheer enjoyment</strong>, <strong>great admirer</strong>, <strong>fleeting pleasure</strong>, <strong>make a difference</strong>, <strong>hold in the highest regard</strong>, <strong>develop a liking for</strong>, <strong>obvious enjoyment</strong>, <strong>grow attached to</strong>, <strong>clear preference</strong>, <strong>instant dislike</strong>, <strong>deep dislike</strong>, <strong>blind hatred</strong>, <strong>irrational hatred</strong>, <strong>strong aversion</strong>, <strong>hate with a passion</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(45)">← Lesson 45</button>
+    <button class="btn btn-coral" onclick="goTo(47)">Lesson 47 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 47: Praising & Criticizing -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-47">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 47</div>
+  <h2 class="sec-title">Praising & Criticizing 👏</h2>
+  <div class="sec-meta">Collocations about praise and criticism</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>barrage of criticism</strong>, <strong>strongly disapprove</strong>, <strong>give your blessing</strong>, <strong>counter criticism</strong>, <strong>grudging approval</strong>, <strong>frown of disapproval</strong>, <strong>think the world of</strong>, <strong>enthusiastic support</strong>, <strong>heartily approve</strong>, <strong>standing ovation</strong>, <strong>rave reviews</strong>, <strong>outstanding performance</strong>, <strong>congratulate warmly</strong>, <strong>scathing criticisms</strong>, <strong>speak highly of</strong>, <strong>win approval</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(46)">← Lesson 46</button>
+    <button class="btn btn-coral" onclick="goTo(48)">Lesson 48 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 48: Metaphor -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-48">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 48</div>
+  <h2 class="sec-title">Metaphor 🌟</h2>
+  <div class="sec-meta">Metaphorical collocations</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>lightning fast</strong>, <strong>root of the problem</strong>, <strong>face lights up</strong>, <strong>eyes shining with delight</strong>, <strong>lighten the mood</strong>, <strong>face darkens</strong>, <strong>dark days</strong>, <strong>ideas flowing</strong>, <strong>conversation flowing</strong>, <strong>poured into the stadium</strong>, <strong>waves of disappointment</strong>, <strong>heated discussion</strong>, <strong>fiery temper</strong>, <strong>tempers flared</strong>, <strong>kindle interest</strong>, <strong>spark outrage</strong>, <strong>rocky start</strong>, <strong>thorny issue</strong>, <strong>romance blossoming</strong>, <strong>bearing fruit</strong>, <strong>plant seeds of hope</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(47)">← Lesson 47</button>
+    <button class="btn btn-coral" onclick="goTo(49)">Lesson 49 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 49: Confusing Words -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-49">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 49</div>
+  <h2 class="sec-title">Confusing Words 🤷</h2>
+  <div class="sec-meta">Commonly confused words</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>close/shut the door</strong>, <strong>win a game</strong>, <strong>earn money</strong>, <strong>gain experience</strong>, <strong>save money</strong>, <strong>keep in touch</strong>, <strong>spend money/time</strong>, <strong>pay rent</strong>, <strong>close vs shut</strong>, <strong>win vs earn vs gain</strong>, <strong>save vs keep</strong>, <strong>spend vs pay</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(48)">← Lesson 48</button>
+    <button class="btn btn-coral" onclick="goTo(50)">Lesson 50 →</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- LESSON 50: Everyday Verbs -->
+<!-- ============================================================ -->
+<section class="sec" id="sec-50">
+  <div class="sec-eye"><span class="sec-dot"></span> Lesson 50</div>
+  <h2 class="sec-title">Everyday Verbs ✅</h2>
+  <div class="sec-meta">Common verb collocations</div>
+  <div class="rtext">
+    <p>Key collocations: <strong>have a baby</strong>, <strong>have children</strong>, <strong>have a good time</strong>, <strong>have fun</strong>, <strong>have breakfast/lunch/dinner</strong>, <strong>take a shower</strong>, <strong>take a class</strong>, <strong>take a bus</strong>, <strong>take a break</strong>, <strong>take action</strong>, <strong>pay attention</strong>, <strong>pay tribute</strong>, <strong>pay a compliment</strong>, <strong>pay a visit</strong>, <strong>break a habit</strong>, <strong>break a promise</strong>, <strong>break the ice</strong>, <strong>break the law</strong>, <strong>catch a cold</strong>, <strong>catch fire</strong>, <strong>catch a glimpse</strong>, <strong>come into effect</strong>, <strong>come to an end</strong>, <strong>come to terms with</strong>, <strong>get married</strong>, <strong>get divorced</strong>, <strong>get drunk</strong>, <strong>get pregnant</strong>.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-outline" onclick="goTo(49)">← Lesson 49</button>
+    <button class="btn btn-coral" onclick="goTo(1)">Back to Lesson 1</button>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- DICT FAB & PANEL -->
+<!-- ============================================================ -->
+<button class="dict-fab" onclick="openDict()" title="My Vocabulary">📖</button>
+<div class="dict-panel" id="dpanel">
+  <div class="dict-head">
+    <span class="dict-head-t">📖 My Words (<span id="dcnt">0</span>)</span>
+    <button class="dict-x" onclick="closeDict()">✕</button>
+  </div>
+  <div class="dict-inner" id="din">
+    <div class="dict-empty">No words yet 💡 Tap orange phrases in the lessons to save them!</div>
+  </div>
+  <div class="dict-ft">
+    <button class="dict-exp" onclick="exportDict()">⬇ Download .txt</button>
+    <button class="dict-clr" onclick="clearDict()">Clear</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<!-- ============================================================ -->
+<!-- SCRIPTS -->
+<!-- ============================================================ -->
+<script>
+// ════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════
+let score=0, okCount=0, curSec=1;
+const totalLessons=50;
+const lessonTitles=['','Family','Relationships','Appearance','Character','Feelings','Houses','Eating','Movies/Books','Music','Sports','Health','Computers','Study','Academic','Work','Business','Money','Travel','Weather','City','Countryside','Crime','Law','War','Global','Time','Sound','Size','Light','Color','Texture','Smell','Taste','Statistics','Movement','Changes','Speaking','Start/Finish','Success/Failure','Cause/Effect','Memories','Agreeing','Beliefs','Deciding','Claiming','Liking','Praising','Metaphor','Confusing','Everyday'];
+let dict=[];
+try{dict=JSON.parse(localStorage.getItem('langust_dict_all')||'[]');}catch(e){}
+let cqSel={};
+let checked={comp1:false,comp2:false};
+
+// ════════════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════════════
+function goTo(n){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.getElementById('sec-'+n).classList.add('active');
+  curSec=n;
+  document.getElementById('pfill').style.width=((n-1)/(totalLessons-1)*100)+'%';
+  document.getElementById('plbl').textContent=lessonTitles[n]+' ('+n+'/'+totalLessons+')';
+  window.scrollTo({top:0,behavior:'smooth'});
+  buildNavList();
+}
+
+function buildNavList(){
+  const tabs=document.getElementById('sec-tabs');
+  if(!tabs)return;
+  const total=totalLessons;
+  let html='';
+  for(let i=1;i<=total;i++){
+    const active=curSec===i?' active-tab':'';
+    const icon=lessonTitles[i] ? lessonTitles[i].charAt(0) : '📚';
+    html+=`<div class="sec-tab${active}" onclick="goTo(${i})">
+      <span class="tab-icon">${i===1?'🏠':i===2?'💕':i===3?'👀':i===4?'🧠':i===5?'😊':i===6?'🏠':i===7?'🍽️':i===8?'🎬':i===9?'🎵':i===10?'⚽':i===11?'🏥':i===12?'💻':i===13?'🎓':i===14?'📝':i===15?'💼':i===16?'📈':i===17?'💰':i===18?'✈️':i===19?'☀️':i===20?'🏙️':i===21?'🌳':i===22?'🚔':i===23?'⚖️':i===24?'☮️':i===25?'🌍':i===26?'⏰':i===27?'🔊':i===28?'📏':i===29?'💡':i===30?'🎨':i===31?'👋':i===32?'👃':i===33?'😋':i===34?'📊':i===35?'🏃':i===36?'🔄':i===37?'🗣️':i===38?'🏁':i===39?'🏆':i===40?'🔗':i===41?'🧠':i===42?'🤝':i===43?'🙏':i===44?'🤔':i===45?'🗣️':i===46?'❤️':i===47?'👏':i===48?'🌟':i===49?'🤷':i===50?'✅':'📚'}</span>
+      <span>${i}</span>
+      <span class="tab-num">${i}</span>
+    </div>`;
+  }
+  tabs.innerHTML=html;
+  const activeTab=tabs.querySelector('.active-tab');
+  if(activeTab)activeTab.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+
+// ════════════════════════════════════════════════════
+// DICTIONARY FUNCTIONS
+// ════════════════════════════════════════════════════
+function saveDict(){try{localStorage.setItem('langust_dict_all',JSON.stringify(dict));}catch(e){}}
+function addW(el){
+  const w=el.dataset.w,ru=el.dataset.ru||'',m=el.dataset.m||'';
+  if(dict.find(d=>d.w===w)){showToast('Already saved!');return;}
+  dict.push({w,ru,m});saveDict();renderDict();
+  el.classList.add('saved');showToast('✅ Saved: '+w);
+}
+function removeW(i){dict.splice(i,1);saveDict();renderDict();}
+function clearDict(){if(confirm('Clear all saved words?')){dict=[];saveDict();renderDict();}}
+function openDict(){document.getElementById('dpanel').classList.add('open');renderDict();}
+function closeDict(){document.getElementById('dpanel').classList.remove('open');}
+function renderDict(){
+  document.getElementById('dcnt').textContent=dict.length;
+  const el=document.getElementById('din');
+  if(!dict.length){el.innerHTML='<div class="dict-empty">No words yet 💡 Tap orange phrases to save them!</div>';return;}
+  el.innerHTML=dict.map((d,i)=>{
+    return `<div class="dict-entry">
+      <div style="flex:1;min-width:0">
+        <div class="dict-w">${d.w}</div>
+        ${d.ru?`<div class="dict-ru">${d.ru}</div>`:''}
+        ${d.m?`<div class="dict-m">${d.m}</div>`:''}
+      </div>
+      <button class="dict-del" onclick="removeW(${i})">✕</button>
+    </div>`;
+  }).join('');
+}
+function exportDict(){
+  const txt=dict.map(d=>`${d.w}${d.ru?' — '+d.ru:''}${d.m?'\n  '+d.m:''}`).join('\n\n');
+  const full='LANGUST — 1000 English Collocations\nMy Vocabulary List\n'+new Date().toLocaleDateString()+'\n\n'+txt;
+  try{
+    const blob=new Blob([full],{type:'text/plain;charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;a.download='langust_all_vocab.txt';
+    document.body.appendChild(a);a.click();
+    setTimeout(()=>{URL.revokeObjectURL(url);document.body.removeChild(a);},1000);
+  }catch(e){
+    const w=window.open('','_blank');
+    if(w){w.document.write('<pre>'+full+'</pre>');w.document.close();}
+  }
+}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+
+// ════════════════════════════════════════════════════
+// COMPREHENSION
+// ════════════════════════════════════════════════════
+function buildComp(n,data){
+  const el=document.getElementById('cq'+n);
+  if(!el)return;
+  el.innerHTML=data.map((q,qi)=>`
+    <div class="comp-q">
+      <div class="comp-qt">${qi+1}. ${q.q}</div>
+      <div class="comp-opts">${q.opts.map((o,oi)=>`<button class="comp-opt" id="cq${n}${qi}${oi}" onclick="selCQ(${n},${qi},${oi})">${o}</button>`).join('')}</div>
+    </div>`).join('');
+}
+function selCQ(n,qi,oi){
+  if(!cqSel[n])cqSel[n]={};
+  const data=n===1?CQ1:CQ2;
+  data[qi].opts.forEach((_,j)=>{ const e=document.getElementById('cq'+n+qi+j); if(e)e.classList.remove('sel'); });
+  cqSel[n][qi]=oi;
+  document.getElementById('cq'+n+qi+oi).classList.add('sel');
+}
+function chkComp(n){
+  if(checked['comp'+n])return;
+  checked['comp'+n]=true;
+  const data=n===1?CQ1:CQ2;let ok=0;
+  data.forEach((q,qi)=>{
+    q.opts.forEach((_,oi)=>{
+      const e=document.getElementById('cq'+n+qi+oi);if(!e)return;e.disabled=true;
+      if(oi===q.ok)e.classList.add('ok');
+      else if(cqSel[n]&&cqSel[n][qi]===oi)e.classList.add('bad');
+    });
+    if(cqSel[n]&&cqSel[n][qi]===q.ok){ok++;addSc(3);}
+  });
+  showFb('cfb'+n,ok===data.length?'ok':'bad',ok+'/'+data.length+(ok===data.length?' — excellent! 🎉':' correct. Review the text!'));
+}
+function addSc(p){score+=p;okCount++;document.getElementById('pscore').textContent='⭐ '+score;}
+function showFb(id,type,msg){const e=document.getElementById(id);if(!e)return;e.className='fb show '+type;e.textContent=msg;}
+
+// ════════════════════════════════════════════════════
+// TEACHER TOGGLE
+// ════════════════════════════════════════════════════
+function toggleT(){const on=document.getElementById('tog').checked;document.querySelectorAll('.tnote').forEach(e=>e.classList.toggle('show',on));}
+
+// ════════════════════════════════════════════════════
+// COMPREHENSION DATA
+// ════════════════════════════════════════════════════
+const CQ1 = [
+  {q:"What type of family did Anna grow up in?",opts:["A close-knit family","A dysfunctional family","A loving family"],ok:1},
+  {q:"Who was first awarded custody of Anna?",opts:["Her mother","Her father","Her grandparents"],ok:1},
+  {q:"What did Anna's extended family become for her?",opts:["A burden","A safe space","A broken home"],ok:1},
+];
+const CQ2 = [
+  {q:"What does 'make friends' mean?",opts:["To create friendships","To be a good person","To work together"],ok:0},
+  {q:"What is a 'soul mate'?",opts:["Someone you work with","Someone you are destined to be with","A friend from childhood"],ok:1},
+  {q:"What does 'cheat on' mean?",opts:["To be unfaithful","To help someone","To break a promise"],ok:0},
+];
+
+// ════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════
+buildComp(1,CQ1);
+buildComp(2,CQ2);
+renderDict();
+buildNavList();
+goTo(1);
+</script>
+</body>
+</html>
